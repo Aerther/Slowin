@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREATE</title>
+</head>
+<body>
+    <form th:action="@{/tracks/create}" method="post">
+        <input type="text" name="name" id="name">
+        <input type="text" name="city" id="city">
+        <input type="number" name="length" id="length">
+        <input type="number" name="latitude" id="latitude">
+        <input type="number" name="longitude" id="longitude">
+        <input type="number" name="fastestTime" id="fastestTime">   
+        
+        <label for="country">Country</label>
+        <select name="countryId" id="countryId">
+            <option
+                th:each="country : ${countries}"
+                th:value="${country.id}"
+                th:text="${country.brazilian}">
+            </option>
+        </select>
+
+        <input type="submit" value="CREATE">
+    </form>
+</body>
+</html>

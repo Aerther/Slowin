@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIST</title>
+</head>
+<body>
+    <ul>
+        <li th:each="driver : ${drivers}">
+            <p th:text="${driver.id}">Id</p>
+            <p th:text="${driver.name}">Name</p>
+            <p th:text="${driver.level}">Level</p>
+            <p th:text="${driver.nationality}">Nationality</p>
+        </li>
+    </ul>
+</body>
+</html>

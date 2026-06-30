@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIST</title>
+</head>
+<body>
+    <ul>
+        <li th:each="race : ${races}">
+            <p th:text="${race.id}">Id</p>
+            <p th:text="${race.name}">Name</p>
+            <p th:text="${race.dateCreated}">Date Created</p>
+            <p th:text="${race.dateStarted}">Date Started</p>
+            <p th:text="${race.lapsQuantity}">Laps Quantity</p>
+            <p th:text="${race.lapsDone}">Laps Done</p>
+            <p th:text="${race.trackDTO.name}">Track Name</p>
+            <p th:text="${race.weatherDTO}">City Elevation</p>
+            
+            <ul>
+                <li th:each="result : ${race.resultsDTO}">
+                    <p th:text="${result.id}">Id</p>
+                    <p th:text="${result.driver.name}">Driver Name</p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>

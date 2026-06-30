@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIST</title>
+</head>
+<body>
+    <ul>
+        <li th:each="country : ${countries}">
+            <p th:text="${country.id}">Id</p>
+            <p th:text="${country.name}">Name</p>
+            <p th:text="${country.capital}">Capital</p>
+            <p th:text="${country.code}">Code</p>
+            <p th:text="${country.flagUrl}">Flag URL</p>
+            <p th:text="${country.brazilian}">Name in portuguese</p>
+        </li>
+    </ul>
+</body>
+</html>

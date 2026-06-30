@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREATE</title>
+</head>
+<body>
+    <form th:action="@{/races/create}" method="post">
+        <input type="text" name="name" id="name">
+        <input type="number" name="lapsQuantity" id="lapsQuantity">
+
+        <label for="tracks">Tracks</label>
+        <select name="trackId" id="tracks">
+            <option
+                th:each="track : ${tracks}"
+                th:value="${track.id}"
+                th:text="${track.name}">
+            </option>
+        </select>
+
+        <label for="driversId">Drivers</label>
+        <select name="driversId" id="driversId" multiple>
+            <option
+                th:each="driver : ${drivers}"
+                th:value="${driver.id}"
+                th:text="${driver.name}">
+            </option>
+        </select>
+
+        <input type="submit" value="CREATE">
+    </form>
+</body>
+</html>
