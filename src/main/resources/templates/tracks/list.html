@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIST</title>
-</head>
+<head th:replace="~{fragments/head :: head('Tracks')}"></head>
 <body>
-    <ul>
-        <li th:each="track : ${tracks}">
-            <p th:text="${track.id}">Id</p>
-            <p th:text="${track.name}">Name</p>
-            <p th:text="${track.city}">City</p>
-            <p th:text="${track.length}">Length</p>
-            <p th:text="${track.fastestTime}">Fastest</p>
-            <p th:text="${track.latitude}">Latitude</p>
-            <p th:text="${track.longitude}">Longitude</p>
-            <p th:text="${track.countryDTO}">Country</p>
-        </li>
-    </ul>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <main>
+        <ul>
+            <li th:each="track : ${tracks}"> 
+                <p th:text="${track.id}">Id</p>
+                <p th:text="${track.name}">Name</p>
+                <p th:text="${track.city}">City</p>
+                <p th:text="${track.length}">Length</p>
+                <p th:text="${track.fastestTime}">Fastest</p>
+                <p th:text="${track.latitude}">Latitude</p>
+                <p th:text="${track.longitude}">Longitude</p>
+                <p th:text="${track.countryDTO}">Country</p>
+            </li>
+        </ul>
+    </main>
 </body>
 </html>

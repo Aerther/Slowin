@@ -1,0 +1,18 @@
+.drivers-list {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.driver-card {
+    width: 25%;
+    height: auto;
+
+    padding: 5px 10px;
+
+    background-color: var(--primary-color);
+    border: 2px solid var(--terciary-color);
+    border-radius: 15px;
+}

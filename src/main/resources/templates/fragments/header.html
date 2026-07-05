@@ -1,0 +1,14 @@
+<header th:fragment="header">
+    <section class="logo">
+        <figure>
+            <img th:src="@{images/logo.png}" alt="Formula 1 logo">
+        </figure>
+    </section>
+
+    <section class="links">
+        <a th:href="@{/races}">RACES</a>
+        <a th:href="@{/countries}">COUNTRIES</a>
+        <a th:href="@{/drivers}">DRIVERS</a>
+        <a th:href="@{/tracks}">TRACKS</a>
+    </section>
+</header>
