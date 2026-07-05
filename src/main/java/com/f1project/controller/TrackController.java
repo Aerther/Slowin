@@ -57,6 +57,13 @@ public class TrackController {
 		return "redirect:/tracks";
 	}
 	
+	@GetMapping("/create/txt")
+	public String createTracksBasedTxt() {
+		this.trackService.saveTracksFromTxt();
+		
+		return "redirect:/tracks";
+	}
+	
 	// UPDATE OPERATION
 	
 	@GetMapping("/update/{trackId}")
@@ -82,6 +89,13 @@ public class TrackController {
 	@PostMapping("/delete")
 	public String deleteTrack(@RequestParam("trackId") Long trackId) {
 		this.trackService.deleteTrack(trackId);
+		
+		return "redirect:/tracks";
+	}
+	
+	@GetMapping("/delete/all")
+	public String deleteAllTracks() {
+		this.trackService.deleteAllTracks();
 		
 		return "redirect:/tracks";
 	}

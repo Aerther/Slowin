@@ -94,7 +94,7 @@ public class RaceController {
 		return "redirect:/races";
 	}
 	
-	@PostMapping("/delete/all")
+	@GetMapping("/delete/all")
 	public String deleteAllRaces() {
 		this.raceService.deleteAllRaces();
 		

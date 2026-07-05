@@ -15,6 +15,8 @@ public interface TrackService {
 	
 	Track updateTrack(TrackRequest trackRequest);
 	
+	List<Track> saveTracksFromTxt();
+	
 	void deleteTrack(Long id);
 	
 	void deleteAllTracks();

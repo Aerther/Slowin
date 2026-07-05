@@ -1,5 +1,6 @@
 package com.f1project.service.implementation;
 
+import java.io.FileReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.f1project.exception.ResourceNotFoundException;
 import com.f1project.helper.CentralMapper;
+import com.f1project.helper.ReadFile;
 import com.f1project.model.dto.TrackDTO;
 import com.f1project.model.entity.Country;
 import com.f1project.model.entity.Track;
@@ -78,6 +80,25 @@ public class TrackServiceImpl implements TrackService {
 		Track savedTrack = this.trackRepo.save(track);
 		
 		return savedTrack;
+	}
+
+	@Override
+	public List<Track> saveTracksFromTxt() {
+		List<TrackDTO> tracksDTO = ReadFile.readTracksFile();
+		
+		List<Track> tracks = tracksDTO.stream().map(mapper::DTO2track).collect(Collectors.toList());
+		
+		tracks.forEach(track -> {
+			String countryBrazilian = track.getCountry().getBrazilian();
+			
+			Country country = this.countryService.findCountryByBrazilian(countryBrazilian);
+			
+			track.setCountry(country);
+		});
+		
+		List<Track> savedTracks = this.trackRepo.saveAll(tracks);
+		
+		return savedTracks;
 	}
 	
 }

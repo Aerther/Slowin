@@ -8,4 +8,5 @@ import com.f1project.model.entity.Country;
 
 public interface CountryRepository extends JpaRepository<Country, Long> {
 	public Optional<Country> findByName(String name);
+	public Optional<Country> findByBrazilian(String brazilian);
 }

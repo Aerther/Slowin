@@ -38,6 +38,11 @@ public class CountryServiceImpl implements CountryService {
 	public Country findCountryByName(String name) {
 		return this.countryRepo.findByName(name).orElseThrow(() -> {throw new ResourceNotFoundException("A COUNTRY with NAME=" + name + " doesn't exists");});
 	}
+	
+	@Override
+	public Country findCountryByBrazilian(String name) {
+		return this.countryRepo.findByBrazilian(name).orElseThrow(() -> {throw new ResourceNotFoundException("A COUNTRY with BRAZILIAN=" + name + " doesn't exists");});
+	}
 
 	@Override
 	public Country saveCountry(CountryRequest countryRequest) {

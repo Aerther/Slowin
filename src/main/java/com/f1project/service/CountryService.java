@@ -12,6 +12,7 @@ public interface CountryService {
 	public Country findCountryById(Long id);
 	
 	public Country findCountryByName(String name);
+	public Country findCountryByBrazilian(String brazilian);
 	
 	public Country saveCountry(CountryRequest countryRequest);
 	
