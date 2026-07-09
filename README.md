@@ -4,7 +4,7 @@ Projeto desenvolvido para a disciplina de Desenvolvimento Web do **4º ano do Cu
 
 ## Integrantes
 
-* Arthur Lassem
+* Arthur
 * Leonardo
 
 **Turma:** 4º TI
