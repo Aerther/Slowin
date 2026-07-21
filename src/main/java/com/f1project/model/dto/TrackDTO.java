@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TrackDTO {
 	private Long id;
-	private String name;
 	
+	private String name;
 	private String city;
 	
 	private double fastestTime;
+	private String lapTime;
 	private double length;
 	private double latitude;
 	private double longitude;

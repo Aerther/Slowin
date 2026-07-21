@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.f1project.client.ApiClient;
 import com.f1project.helper.CentralMapper;
+import com.f1project.helper.SortList;
 import com.f1project.model.dto.CountryDTO;
 import com.f1project.service.CountryService;
 
@@ -27,9 +28,10 @@ public class CountryController {
 	
 	@GetMapping
 	public String showCountries(Model model) {
-		List<CountryDTO> countriesDTO = mapper.countries2DTOList(this.countryService.findAllCountries());
+		List<CountryDTO> countriesDTO = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
 		
 		model.addAttribute("countries", countriesDTO);
+		model.addAttribute("activePage", "countries");
 		
 		return "countries/list";
 	}

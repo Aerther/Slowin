@@ -1,29 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREATE</title>
-</head>
+<head th:replace="~{fragments/head :: head('New Track')}"></head>
 <body>
-    <form th:action="@{/tracks/create}" method="post">
-        <input type="text" name="name" id="name">
-        <input type="text" name="city" id="city">
-        <input type="number" name="length" id="length">
-        <input type="number" name="latitude" id="latitude">
-        <input type="number" name="longitude" id="longitude">
-        <input type="number" name="fastestTime" id="fastestTime">   
-        
-        <label for="country">Country</label>
-        <select name="countryId" id="countryId">
-            <option
-                th:each="country : ${countries}"
-                th:value="${country.id}"
-                th:text="${country.brazilian}">
-            </option>
-        </select>
+    <header th:replace="~{fragments/header :: header}"></header>
 
-        <input type="submit" value="CREATE">
-    </form>
+    <main class="app-main">
+        <section class="page-title-bar">
+            <div>
+                <div>
+                    <h1>Cadastrar Nova Pista</h1>
+                    <p class="subtitle">Insira os dados para adicionar uma pista ao sistema</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-container">
+            <form th:action="@{/tracks/create}" method="post" class="app-form">
+                <div class="form-group">
+                    <label for="name">Nome da Pista</label>
+                    <input type="text" id="name" name="name" placeholder="Ex: Monza" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="city">Cidade</label>
+                    <input type="text" id="city" name="city" placeholder="Ex: São Paulo" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="fastestTime">Tempo Mais Rápido (em segundos)</label>
+                    <input type="number" id="fastestTime" name="fastestTime" step="any" min="0" placeholder="Ex: 104.705" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="length">Tamanho (em quilômetros)</label>
+                    <input type="number" id="length" name="length" step="any" min="0" placeholder="Ex: 4.13" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="latitude">Latitude</label>
+                    <input type="number" id="latitude" name="latitude" step="any" placeholder="Ex: -104.85" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="longitude">Longitude</label>
+                    <input type="number" id="longitude" name="longitude" step="any" placeholder="Ex: 23.08" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="nationality">País</label>
+                    <div class="select-wrapper">
+                        <select id="nationality" name="countryId" required>
+                            <option value="" disabled selected>Selecione um país...</option>
+                            <option th:each="country : ${countries}" 
+                                    th:value="${country.id}" 
+                                    th:text="${country.code + ' - ' + country.brazilian}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a th:href="@{/tracks}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Salvar Pista</button>
+                </div>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

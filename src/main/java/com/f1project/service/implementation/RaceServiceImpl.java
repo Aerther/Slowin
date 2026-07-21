@@ -99,4 +99,9 @@ public class RaceServiceImpl implements RaceService {
 		this.raceRepo.deleteAll();
 	}
 
+	@Override
+	public Race updateRace(Race race) {
+		return this.raceRepo.save(race);
+	}
+
 }

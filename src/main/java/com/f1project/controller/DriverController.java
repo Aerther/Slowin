@@ -1,6 +1,7 @@
 package com.f1project.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.f1project.helper.CentralMapper;
+import com.f1project.helper.SortList;
 import com.f1project.model.dto.CountryDTO;
 import com.f1project.model.dto.DriverDTO;
 import com.f1project.request.DriverRequest;
@@ -34,9 +36,10 @@ public class DriverController {
 	
 	@GetMapping("/create")
 	public String showDriverCreationForm(Model model) {
-		List<CountryDTO> countriesDTO = mapper.countries2DTOList(this.countryService.findAllCountries());
+		List<CountryDTO> countriesDTO = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
 		
 		model.addAttribute("countries", countriesDTO);
+		model.addAttribute("activePage", "drivers");
 		
 		return "drivers/create";
 	}
@@ -53,10 +56,11 @@ public class DriverController {
 	@GetMapping("/update/{driverId}")
 	public String showDriverEditForm(@PathVariable("driverId") Long driverId, Model model) {
 		DriverDTO driverDTO = mapper.driver2DTO(this.driverService.findDriverById(driverId));
-		List<CountryDTO> countriesDTO = mapper.countries2DTOList(this.countryService.findAllCountries());
+		List<CountryDTO> countriesDTO = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
 		
 		model.addAttribute("driver", driverDTO);
 		model.addAttribute("countries", countriesDTO);
+		model.addAttribute("activePage", "drivers");
 		
 		return "drivers/update";
 	}
@@ -70,7 +74,7 @@ public class DriverController {
 	
 	// DELETE OPERATION
 	
-	@PostMapping("/delete")
+	@GetMapping("/delete")
 	public String deleteDriver(@RequestParam("driverId") Long driverId) {
 		this.driverService.deleteDriver(driverId);
 		
@@ -81,9 +85,10 @@ public class DriverController {
 	
 	@GetMapping
 	public String showDrivers(Model model) {
-		List<DriverDTO> driversDTO = mapper.drivers2DTOList(this.driverService.findAllDrivers());
+		List<DriverDTO> driversDTO = SortList.sortDriversByName(mapper.drivers2DTOList(this.driverService.findAllDrivers()));
 		
 		model.addAttribute("drivers", driversDTO);
+		model.addAttribute("activePage", "drivers");
 		
 		return "drivers/list";
 	}

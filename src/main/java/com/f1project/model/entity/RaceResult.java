@@ -26,8 +26,9 @@ public class RaceResult {
 	
 	private double fastestLap;
 	private double currentLap;
-	private int position;
-	private int pitStopQuantity;
+	private double raceTime = 0;
+	private int position = 1;
+	private int pitStopQuantity = 0;
 	
 	@ManyToOne
 	private Driver driver;

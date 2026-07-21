@@ -1,34 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREATE</title>
-</head>
+<head th:replace="~{fragments/head :: head('New Race')}"></head>
 <body>
-    <form th:action="@{/races/create}" method="post">
-        <input type="text" name="name" id="name">
-        <input type="number" name="lapsQuantity" id="lapsQuantity">
+    <header th:replace="~{fragments/header :: header}"></header>
 
-        <label for="tracks">Tracks</label>
-        <select name="trackId" id="tracks">
-            <option
-                th:each="track : ${tracks}"
-                th:value="${track.id}"
-                th:text="${track.name}">
-            </option>
-        </select>
+    <main class="app-main">
+        <section class="page-title-bar">
+            <div>
+                <div>
+                    <h1>Cadastrar Nova Corrida</h1>
+                    <p class="subtitle">Configuração do evento, pista e grid de pilotos</p>
+                </div>
+            </div>
+        </section>
 
-        <label for="driversId">Drivers</label>
-        <select name="driversId" id="driversId" multiple>
-            <option
-                th:each="driver : ${drivers}"
-                th:value="${driver.id}"
-                th:text="${driver.name}">
-            </option>
-        </select>
+        <section class="dashboard-container">
+            <form id="race-form" th:action="@{/races/create}" method="post" class="app-form">
+                
+                <div class="form-group">
+                    <label for="name">Nome da Corrida</label>
+                    <input type="text" id="name" name="name" placeholder="Ex: Grande Prêmio de Interlagos" required />
+                </div>
 
-        <input type="submit" value="CREATE">
-    </form>
+                <div class="form-group">
+                    <label for="lapsQuantity">Quantidade de Voltas</label>
+                    <input type="number" id="lapsQuantity" name="lapsQuantity" min="1" placeholder="Ex: 71" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="track">Pista</label>
+                    <div class="select-wrapper">
+                        <select id="track" name="trackId" required>
+                            <option value="" disabled selected>Selecione uma pista...</option>
+                            <option th:each="track : ${tracks}" 
+                                    th:value="${track.id}" 
+                                    th:text="${track.name + ' (' + track.countryDTO.brazilian + ')'}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Grid de Pilotos</label>
+                    <div class="dual-listbox">
+                        
+                        <div class="listbox-column">
+                            <span class="listbox-title">Disponíveis</span>
+                            <ul id="available-drivers" class="custom-listbox">
+                                <li th:each="driver : ${drivers}" 
+                                    class="driver-card" 
+                                    th:data-id="${driver.id}">
+                                    <figure class="flag-icon">
+                                        <img class="fig-img" th:src="${driver.nationality.flagUrl}" th:alt="${driver.nationality.name}">
+                                    </figure>
+                                    <span class="driver-card-name" th:text="${driver.name}">Nome</span>
+                                    <span class="status-badge" th:text="${'Lvl ' + driver.level}">Lvl 1</span>
+                                    <button type="button" class="btn-card-action btn-add" title="Adicionar">+</button>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="listbox-column">
+                            <span class="listbox-title">Adicionados à Corrida</span>
+                            <ul id="selected-drivers" class="custom-listbox"></ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a th:href="@{/races}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Salvar Corrida</button>
+                </div>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

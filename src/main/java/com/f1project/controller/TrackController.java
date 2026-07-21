@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.f1project.helper.CentralMapper;
+import com.f1project.helper.SortList;
 import com.f1project.model.dto.CountryDTO;
 import com.f1project.model.dto.TrackDTO;
 import com.f1project.request.TrackRequest;
@@ -32,9 +33,10 @@ public class TrackController {
 	
 	@GetMapping
 	public String showTracks(Model model) {
-		List<TrackDTO> tracksDTO = mapper.tracks2DTOList(this.trackService.findAllTracks());
+		List<TrackDTO> tracksDTO = SortList.sortTracksByName(mapper.tracks2DTOList(this.trackService.findAllTracks()));
 		
 		model.addAttribute("tracks", tracksDTO);
+		model.addAttribute("activePage", "tracks");
 		
 		return "tracks/list";
 	}
@@ -43,7 +45,7 @@ public class TrackController {
 	
 	@GetMapping("/create")
 	public String showTrackCreationForm(Model model) {
-		List<CountryDTO> countriesDTO = mapper.countries2DTOList(this.countryService.findAllCountries());
+		List<CountryDTO> countriesDTO = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
 		
 		model.addAttribute("countries", countriesDTO);
 		
@@ -86,7 +88,7 @@ public class TrackController {
 	
 	// DELETE OPERATION
 	
-	@PostMapping("/delete")
+	@GetMapping("/delete")
 	public String deleteTrack(@RequestParam("trackId") Long trackId) {
 		this.trackService.deleteTrack(trackId);
 		

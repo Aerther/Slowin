@@ -17,13 +17,7 @@ public class RaceRequest {
 	
 	private String name;
 	
-	private LocalDateTime dateCreated;
-	private LocalDateTime dateStarted;
-	
 	private int lapsQuantity;
-	private int lapsDone;
-	
-	private Weather weather;
 	
 	private Long trackId;
 	

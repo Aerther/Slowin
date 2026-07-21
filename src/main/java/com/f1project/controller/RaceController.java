@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.f1project.helper.CentralMapper;
+import com.f1project.helper.SortList;
 import com.f1project.model.dto.DriverDTO;
 import com.f1project.model.dto.RaceDTO;
 import com.f1project.model.dto.TrackDTO;
@@ -36,9 +37,10 @@ public class RaceController {
 	
 	@GetMapping
 	public String showRaces(Model model) {
-		List<RaceDTO> racesDTO = mapper.races2DTOList(this.raceService.findAllRaces());
+		List<RaceDTO> racesDTO = SortList.sortRacesByName(mapper.races2DTOList(this.raceService.findAllRaces()));
 		
 		model.addAttribute("races", racesDTO);
+		model.addAttribute("activePage", "races");
 		
 		return "races/list";
 	}
@@ -47,8 +49,8 @@ public class RaceController {
 	
 	@GetMapping("/create")
 	public String showRaceCreationForm(Model model) {
-		List<TrackDTO> tracksDTO = mapper.tracks2DTOList(this.trackService.findAllTracks());
-		List<DriverDTO> driversDTO = mapper.drivers2DTOList(this.driverService.findAllDrivers());
+		List<TrackDTO> tracksDTO = SortList.sortTracksByName(mapper.tracks2DTOList(this.trackService.findAllTracks()));
+		List<DriverDTO> driversDTO = SortList.sortDriversByName(mapper.drivers2DTOList(this.driverService.findAllDrivers()));
 		
 		model.addAttribute("tracks", tracksDTO);
 		model.addAttribute("drivers", driversDTO);
@@ -87,7 +89,7 @@ public class RaceController {
 	
 	// DELETE OPERATION
 	
-	@PostMapping("/delete")
+	@GetMapping("/delete")
 	public String deleteRace(@RequestParam("raceId") Long raceId) {
 		this.raceService.deleteRaceById(raceId);
 		

@@ -3,27 +3,67 @@
 <head th:replace="~{fragments/head :: head('Races')}"></head>
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
-    
-    <main>
-        <ul>
-            <li th:each="race : ${races}">
-                <p th:text="${race.id}">Id</p>
-                <p th:text="${race.name}">Name</p>
-                <p th:text="${race.dateCreated}">Date Created</p>
-                <p th:text="${race.dateStarted}">Date Started</p>
-                <p th:text="${race.lapsQuantity}">Laps Quantity</p>
-                <p th:text="${race.lapsDone}">Laps Done</p>
-                <p th:text="${race.trackDTO.name}">Track Name</p>
-                <p th:text="${race.weatherDTO}">City Elevation</p>
-                
-                <ul>
-                    <li th:each="result : ${race.resultsDTO}">
-                        <p th:text="${result.id}">Id</p>
-                        <p th:text="${result.driver.name}">Driver Name</p>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+
+    <main class="app-main">
+        <section class="page-title-bar">
+            <div>
+                <div>
+                    <h1>Corridas Cadastradas</h1>
+                    <p class="subtitle">Gerencie o banco de dados de corridas do sistema</p>
+                </div>
+            </div>
+
+            <a class="btn btn-primary" th:href="@{/races/create}">+ CADASTRAR NOVA CORRIDA</a>
+        </section>
+
+        <section class="dashboard-container">
+            <div class="table-responsive table-responsive-lg">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Corrida</th>
+                            <th>Data Criada</th>
+                            <th>Pista</th>
+                            <th>Voltas</th>
+                            <th>Quant. de Pilotos</th>
+                            <th>Temp. (Graus)</th>
+                            <th class="text-right">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="race : ${races}">
+                            <td class="cell-highlight" th:text="${race.name}">Nome da Corrida</td>
+                            
+                            <td class="cell-highlight" th:text="${#temporals.format(race.dateCreated, 'HH:mm dd/MM/yyyy')}">
+                                Data Criada
+                            </td>
+
+                            <td class="cell-align-middle">
+                                <div class="cell-with-icon">
+                                    <figure class="flag-icon">
+                                        <img class="fig-img" th:src="${race.trackDTO.countryDTO.flagUrl}" th:alt="${race.trackDTO.countryDTO.name}">
+                                    </figure>
+
+                                    <p th:text="${race.trackDTO.name}">Pista</p>
+                                </div>
+                            </td>
+
+                            <td class="cell-highlight" th:text="${race.lapsQuantity}">Voltas</td>
+
+                            <td class="cell-highlight" th:text="${race.resultsDTO.size()}">Quant. de Pilotos</td>
+
+                            <td class="cell-highlight" th:text="${race.weatherDTO.temperature}">Temperatura</td>
+
+                            <td class="text-right">
+                                <a class="btn-table btn-edit" th:href="@{/races/race(raceId=${race.id})}">Race</a>
+                                <a class="btn-table btn-edit">Editar</a>
+                                <a class="btn-table btn-delete" th:href="@{/races/delete(raceId=${race.id})}">Excluir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 </body>
 </html>

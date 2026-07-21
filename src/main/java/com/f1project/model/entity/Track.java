@@ -28,6 +28,7 @@ public class Track {
 	private String city;
 	
 	private double fastestTime;
+	private String lapTime;
 	private double length;
 	private double latitude;
 	private double longitude;

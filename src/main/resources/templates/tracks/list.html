@@ -4,19 +4,58 @@
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
 
-    <main>
-        <ul>
-            <li th:each="track : ${tracks}"> 
-                <p th:text="${track.id}">Id</p>
-                <p th:text="${track.name}">Name</p>
-                <p th:text="${track.city}">City</p>
-                <p th:text="${track.length}">Length</p>
-                <p th:text="${track.fastestTime}">Fastest</p>
-                <p th:text="${track.latitude}">Latitude</p>
-                <p th:text="${track.longitude}">Longitude</p>
-                <p th:text="${track.countryDTO}">Country</p>
-            </li>
-        </ul>
+    <main class="app-main">
+        <section class="page-title-bar">
+            <div>
+                <div>
+                    <h1>Pistas Cadastradas</h1>
+                    <p class="subtitle">Gerencie o banco de dados de pistas do sistema</p>
+                </div>
+            </div>
+
+            <a class="btn btn-primary" th:href="@{/tracks/create}">+ CADASTRAR NOVA PISTA</a>
+        </section>
+
+        <section class="dashboard-container">
+            <div class="table-responsive table-responsive-lg">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Pista</th>
+                            <th>Cidade</th>
+                            <th>País</th>
+                            <th>Tempo Mais Rápido</th>
+                            <th>Tamanho</th>
+                            <th class="text-right">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="track : ${tracks}">
+                            <td class="cell-highlight" th:text="${track.name}">Nome da pista</td>
+                            
+                            <td class="cell-highlight" th:text="${track.city}">Cidade</td>
+
+                            <td class="cell-align-middle">
+                                <div class="cell-with-icon">
+                                    <figure class="flag-icon">
+                                        <img class="fig-img" th:src="${track.countryDTO.flagUrl}" th:alt="${track.countryDTO.name}">
+                                    </figure>
+
+                                    <p th:text="${track.countryDTO.brazilian}">País</p>
+                                </div>
+                            </td>
+
+                            <td class="cell-highlight" th:text="${track.lapTime}">Tempo Mais Rápido</td>
+                            <td class="cell-highlight" th:text="${track.length}">Tamanho</td>
+
+                            <td class="text-right">
+                                <a class="btn-table btn-edit">Editar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 </body>
 </html>

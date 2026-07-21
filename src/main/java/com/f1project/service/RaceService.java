@@ -13,6 +13,7 @@ public interface RaceService {
 	
 	Race saveRace(RaceRequest raceRequest);
 	Race updateRace(RaceRequest raceRequest);
+	Race updateRace(Race race);
 	
 	void deleteRaceById(Long id);
 	void deleteAllRaces();

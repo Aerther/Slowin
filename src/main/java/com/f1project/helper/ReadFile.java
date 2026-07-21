@@ -32,6 +32,7 @@ public class ReadFile {
 				double latitude = Double.parseDouble(attrs[3]);
 				double longitude = Double.parseDouble(attrs[4]);
 				double length = Double.parseDouble(attrs[5]);
+				length = Math.round(length * 1000.0) / 1000.0;
 				
 				CountryDTO countryDTO = new CountryDTO();
 				countryDTO.setBrazilian(country);
@@ -41,6 +42,7 @@ public class ReadFile {
 					name,
 					city,
 					fastestTime,
+					FormatUtils.formatLapTime(fastestTime),
 					length,
 					latitude,
 					longitude,

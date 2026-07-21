@@ -4,17 +4,45 @@
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
     
-    <main>
-        <ul>
-            <li th:each="country : ${countries}">
-                <p th:text="${country.id}">Id</p>
-                <p th:text="${country.name}">Name</p>
-                <p th:text="${country.capital}">Capital</p>
-                <p th:text="${country.code}">Code</p>
-                <p th:text="${country.flagUrl}">Flag URL</p>
-                <p th:text="${country.brazilian}">Name in portuguese</p>
-            </li>
-        </ul>
+    <main class="app-main">
+        <section class="page-title-bar">
+            <div>
+                <div>
+                    <h1>Países Cadastrados</h1>
+                    <p class="subtitle">Gerencie o banco de dados de países do sistema</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-container">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>País</th>
+                            <th>Capital</th>
+                            <th>Código</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="country : ${countries}">
+                            <td class="cell-align-middle">
+                                <div class="cell-with-icon">
+                                    <figure class="flag-icon">
+                                        <img class="fig-img" th:src="${country.flagUrl}" th:alt="${country.name}">
+                                    </figure>
+
+                                    <p th:text="${country.brazilian}">País</p>
+                                </div>
+                            </td>
+
+                            <td class="cell-highlight" th:text="${country.capital}">Capital</td>
+                            <td class="cell-highlight" th:text="${country.code}">Código</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 </body>
 </html>

@@ -2,4 +2,8 @@
     --primary-color: #C10600;
     --secondary-color: #0F0F0F;
     --terciary-color: #ffffff;
+    --dark-gray: #1A1A1A;
+    --light-gray: #2A2A2A;
+    --accent-glow: rgba(193, 6, 0, 0.15);
+    --running-green: #00D26A;
 }

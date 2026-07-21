@@ -16,6 +16,7 @@ public class RaceResultDTO {
 	
 	private double fastestLap;
 	private double currentLap;
+	private double raceTime;
 	private int position;
 	private int pitStopQuantity;
 	
