@@ -56,6 +56,7 @@ public class RaceServiceImpl implements RaceService {
 		Track track = this.trackService.findTrackById(trackId);
 		
 		Weather weather = mapper.DTO2weather(client.getWeatherCity(track.getLatitude(), track.getLongitude()));
+		weather.setWeatherCondition();
 		
 		Race race = mapper.request2Race(raceRequest);
 		race.setTrack(track);
@@ -64,6 +65,7 @@ public class RaceServiceImpl implements RaceService {
 		race.setLapsDone(0);
 		
 		List<RaceResult> raceResults = new ArrayList<>();
+		
 		for(Long driverId : raceRequest.getDriversId()) {
 			Driver driver = this.driverService.findDriverById(driverId);
 			
@@ -71,6 +73,8 @@ public class RaceServiceImpl implements RaceService {
 			raceResult.setDriver(driver);
 			raceResult.setRace(race);
 			raceResult.setPosition(1);
+			
+			System.out.println("Name: " + driver.getName());
 			
 			raceResults.add(raceResult);
 		}

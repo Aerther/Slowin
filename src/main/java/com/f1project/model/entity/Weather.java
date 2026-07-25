@@ -1,5 +1,7 @@
 package com.f1project.model.entity;
 
+import com.f1project.helper.enums.WeatherCondition;
+
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,4 +17,9 @@ public class Weather {
 	private double temperature;
 	private double precipitation;
 	private double windSpeed;
+	private WeatherCondition weatherCondition;
+	
+	public void setWeatherCondition() {
+		this.weatherCondition = WeatherCondition.fromCode(code);
+	}
 }

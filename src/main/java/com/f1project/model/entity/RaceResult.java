@@ -24,9 +24,19 @@ public class RaceResult {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private double fastestLap;
-	private double currentLap;
+
 	private double raceTime = 0;
+	private double fastestLap = 100000;
+	private double currentLap;
+	private double difference = 0;
+	private double differenceToFirst = 0;
+	
+	private String differenceToFirstTime;
+	private String differenceTime;
+	private String fastestLapTime;
+	private String currentLapTime;
+	private String totalRaceTime;
+	
 	private int position = 1;
 	private int pitStopQuantity = 0;
 	

@@ -55,7 +55,7 @@ public class RaceController {
 		model.addAttribute("tracks", tracksDTO);
 		model.addAttribute("drivers", driversDTO);
 		
-		return "races/create";
+		return "races/create"; 
 	}
 	
 	@PostMapping("/create")

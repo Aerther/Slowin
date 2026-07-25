@@ -26,7 +26,7 @@
                             <th>Pista</th>
                             <th>Voltas</th>
                             <th>Quant. de Pilotos</th>
-                            <th>Temp. (Graus)</th>
+                            <th>Clima</th>
                             <th class="text-right">Ações</th>
                         </tr>
                     </thead>
@@ -52,10 +52,10 @@
 
                             <td class="cell-highlight" th:text="${race.resultsDTO.size()}">Quant. de Pilotos</td>
 
-                            <td class="cell-highlight" th:text="${race.weatherDTO.temperature}">Temperatura</td>
+                            <td class="cell-highlight" th:text="${race.weatherDTO.weatherCondition.getDescription()}">Clima</td>
 
                             <td class="text-right">
-                                <a class="btn-table btn-edit" th:href="@{/races/race(raceId=${race.id})}">Race</a>
+                                <a class="btn-table btn-edit" th:href="@{'/simulation/' + ${race.id}}">Race</a>
                                 <a class="btn-table btn-edit">Editar</a>
                                 <a class="btn-table btn-delete" th:href="@{/races/delete(raceId=${race.id})}">Excluir</a>
                             </td>

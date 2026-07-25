@@ -1,6 +1,5 @@
 package com.f1project.request;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.f1project.model.entity.Weather;

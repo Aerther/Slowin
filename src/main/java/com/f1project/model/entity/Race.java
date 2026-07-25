@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.f1project.helper.enums.RaceStatus;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -38,6 +40,8 @@ public class Race {
 	
 	private LocalDateTime dateCreated;
 	private LocalDateTime dateStarted;
+	
+	private RaceStatus raceStatus = RaceStatus.CREATED;
 	
 	private int lapsQuantity;
 	private int lapsDone;

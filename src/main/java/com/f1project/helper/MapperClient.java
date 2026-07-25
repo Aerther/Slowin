@@ -44,7 +44,8 @@ public class MapperClient {
 			elevation,
 			temperature,
 			precipitation,
-			windSpeed
+			windSpeed,
+			null
 		);
 		
 		return weatherDTO;

@@ -23,7 +23,7 @@ public class SimulationRandom {
 	}
 	
 	public double calculateDriverLevelVariation(int driverLevel) {
-		return (-1.0) * driverLevel * 2;
+		return (-1.0) * driverLevel / 50;
 	}
 	
 	public double calculateLapVariation() {

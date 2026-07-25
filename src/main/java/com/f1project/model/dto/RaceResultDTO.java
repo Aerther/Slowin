@@ -14,13 +14,22 @@ public class RaceResultDTO {
 	
 	private Long id;
 	
+	private double raceTime;
 	private double fastestLap;
 	private double currentLap;
-	private double raceTime;
+	private double difference;
+	private double differenceToFirst;
+	
+	private String differenceToFirstTime;
+	private String differenceTime;
+	private String fastestLapTime;
+	private String currentLapTime;
+	private String totalRaceTime;
+	
 	private int position;
 	private int pitStopQuantity;
 	
-	private Driver driver;
+	private DriverDTO driverDTO;
 	
-	private Race race;
+	private RaceDTO raceDTO;
 }
