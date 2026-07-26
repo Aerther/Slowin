@@ -27,9 +27,7 @@ public class SimulationController {
 	
 	@GetMapping("{raceId}")
 	public String showSimulationRace(@PathVariable("raceId") Long raceId, Model model) {
-		this.simulationService.simulateRace(raceId, 0);
-		
-		RaceDTO raceDTO = mapper.race2DTO(this.raceService.findRaceById(raceId));
+		RaceDTO raceDTO = mapper.race2DTO(this.simulationService.orderRaceResultsByRaceTime(raceId));
 		
 		model.addAttribute("race", raceDTO);
 		

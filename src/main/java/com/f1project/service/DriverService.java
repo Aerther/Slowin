@@ -15,6 +15,8 @@ public interface DriverService {
 	
 	Driver updateDriver(DriverRequest driverRequest);
 	
+	List<Driver> createPreMadeDrivers();
+	
 	void deleteDriver(Long id);
 	
 	void deleteAllDrivers();

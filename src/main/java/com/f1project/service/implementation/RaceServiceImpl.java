@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.f1project.client.ApiClient;
 import com.f1project.exception.ResourceNotFoundException;
 import com.f1project.helper.CentralMapper;
+import com.f1project.helper.enums.DriverStatus;
+import com.f1project.helper.enums.RaceStatus;
+import com.f1project.helper.enums.Tyre;
 import com.f1project.model.dto.RaceDTO;
 import com.f1project.model.entity.Driver;
 import com.f1project.model.entity.Race;
@@ -63,6 +66,7 @@ public class RaceServiceImpl implements RaceService {
 		race.setWeather(weather);
 		race.setDateCreated(LocalDateTime.now());
 		race.setLapsDone(0);
+		race.setRaceStatus(RaceStatus.CREATED);
 		
 		List<RaceResult> raceResults = new ArrayList<>();
 		
@@ -73,8 +77,9 @@ public class RaceServiceImpl implements RaceService {
 			raceResult.setDriver(driver);
 			raceResult.setRace(race);
 			raceResult.setPosition(1);
-			
-			System.out.println("Name: " + driver.getName());
+			raceResult.setTyre(Tyre.chooseRandomTyre(weather.getWeatherCondition()));
+			raceResult.setDriverStatus(DriverStatus.RACING);
+			raceResult.setTyreUsage(100);
 			
 			raceResults.add(raceResult);
 		}

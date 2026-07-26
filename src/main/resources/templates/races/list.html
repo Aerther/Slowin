@@ -52,7 +52,17 @@
 
                             <td class="cell-highlight" th:text="${race.resultsDTO.size()}">Quant. de Pilotos</td>
 
-                            <td class="cell-highlight" th:text="${race.weatherDTO.weatherCondition.getDescription()}">Clima</td>
+                            <td class="cell-align-middle">
+                                <div class="weather-value-wrapper">
+                                    <img class="weather-icon"
+                                        th:src="@{${race.weatherDTO.weatherCondition.getWeatherUrl()}}"
+                                        th:alt="${race.weatherDTO.weatherCondition.description}">
+
+                                    <span th:text="${race.weatherDTO.weatherCondition.description}">
+                                        Ensolarado
+                                    </span>
+                                </div>
+                            </td>
 
                             <td class="text-right">
                                 <a class="btn-table btn-edit" th:href="@{'/simulation/' + ${race.id}}">Race</a>

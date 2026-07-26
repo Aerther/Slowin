@@ -1,5 +1,6 @@
 package com.f1project.service.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,6 +80,28 @@ public class DriverServiceImpl implements DriverService {
 		Driver savedDriver = this.driverRepo.save(driver);
 		
 		return savedDriver;
+	}
+
+	@Override
+	public List<Driver> createPreMadeDrivers() {
+		List<Driver> drivers = new ArrayList<>();
+		
+		List<String> names = new ArrayList<>(List.of("Arthur", "Paulo", "Mathias", "Bino", "Marcelo", "Nícolas", "Leonardo"));
+		
+		Country brasil = this.countryService.findCountryByBrazilian("Brasil");
+		
+		names.forEach((name) -> {
+			Driver driver = new Driver();
+			driver.setName(name);
+			driver.setLevel(99);
+			driver.setNationality(brasil);
+			
+			drivers.add(driver);
+			
+			this.driverRepo.save(driver);
+		});
+		
+		return drivers;
 	}
 
 }

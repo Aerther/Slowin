@@ -92,4 +92,12 @@ public class DriverController {
 		
 		return "drivers/list";
 	}
+	
+	// CREATE DRIVERS PRE MADE
+	@GetMapping("/create/premade")
+	public String createPreMadeDrivers() {
+		this.driverService.createPreMadeDrivers();
+		
+		return "redirect:/drivers";
+	}
 }

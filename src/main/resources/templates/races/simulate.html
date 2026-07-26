@@ -44,8 +44,10 @@
                         <tr>
                             <th class="text-center" style="width: 70px;">Pos</th>
                             <th>Piloto</th>
+                            <th class="text-right">Dif. Pos.</th>
                             <th class="text-right">Dif.</th>
                             <th class="text-right">Dif. para o 1°</th>
+                            <th class="text-center">Pneu</th>
                             <th class="text-center">Pit Stops</th>
                             <th class="text-right">Volta mais Rápida</th>
                             <th class="text-right">Última Volta</th>
@@ -59,6 +61,7 @@
                                     1
                                 </span>
                             </td>
+
                             <td>
                                 <div class="driver-cell">
                                     <figure class="flag-icon">
@@ -73,13 +76,40 @@
                                         th:text="'Lvl ' + ${result.driverDTO.level}">
                                         Lvl 100
                                     </span>
+
+                                    <span class="driver-status-badge status-pitted" 
+                                        th:if="${result.driverStatus.description == 'PITTED'}">
+                                        PIT
+                                    </span>
+
+                                    <span class="driver-status-badge status-dnf" 
+                                        th:if="${result.driverStatus.description == 'DNF'}">
+                                        DNF
+                                    </span>
                                 </div>
+                            </td>
+
+                            <td class="text-center font-bold font-mono" th:with="diff=${result.lastPosition - result.position}">
+                                <span class="pos-change pos-up" th:if="${diff > 0}" th:text="'▲ ' + ${diff}">▲ 2</span>
+                                <span class="pos-change pos-down" th:if="${diff < 0}" th:text="'▼ ' + ${-diff}">▼ 1</span>
+                                <span class="pos-change pos-equal" th:if="${diff == 0}">-</span>
                             </td>
 
                             <td class="text-right font-mono" th:text="${result.differenceTime}">Diferença</td>
 
                             <td class="text-right font-mono" th:text="${result.differenceToFirstTime}">Diferença para o 1°</td>
 
+                            <td class="text-center font-mono">
+                                <div class="tyre-cell">
+                                    <figure class="tyre-icon">
+                                        <img class="tyre-img" 
+                                            th:src="@{${result.tyre.getTyreUrl()}}" 
+                                            th:alt="${result.tyre.description}">
+                                    </figure>
+
+                                    <span class="tyre-usage" th:text="${result.tyreUsage + '%'}">100%</span>
+                                </div>
+                            </td>
                             <td class="text-center">
                                 <span class="sim-pit-badge" th:text="${result.pitStopQuantity}">1</span>
                             </td>

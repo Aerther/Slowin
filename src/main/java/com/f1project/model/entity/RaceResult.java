@@ -1,5 +1,8 @@
 package com.f1project.model.entity;
 
+import com.f1project.helper.enums.DriverStatus;
+import com.f1project.helper.enums.Tyre;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +40,12 @@ public class RaceResult {
 	private String currentLapTime;
 	private String totalRaceTime;
 	
+	private DriverStatus driverStatus = DriverStatus.RACING;
+	private Tyre tyre = Tyre.SOFT;
+	private int tyreUsage = 100; 
+	
 	private int position = 1;
+	private int lastPosition = 1;
 	private int pitStopQuantity = 0;
 	
 	@ManyToOne
