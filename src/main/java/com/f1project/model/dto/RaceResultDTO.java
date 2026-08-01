@@ -1,9 +1,9 @@
 package com.f1project.model.dto;
 
-import com.f1project.helper.enums.DriverStatus;
-import com.f1project.helper.enums.Tyre;
 import com.f1project.model.entity.Driver;
 import com.f1project.model.entity.Race;
+import com.f1project.utils.enums.DriverStatus;
+import com.f1project.utils.enums.Tyre;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +38,7 @@ public class RaceResultDTO {
 	private int lastPosition;
 	private int pitStopQuantity;
 	
-	private DriverDTO driverDTO;
+	private DriverDTO driver;
 	
-	private RaceDTO raceDTO;
+	private RaceDTO race;
 }

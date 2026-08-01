@@ -3,10 +3,10 @@ package com.f1project.model.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.f1project.helper.enums.RaceStatus;
 import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Track;
 import com.f1project.model.entity.Weather;
+import com.f1project.utils.enums.RaceStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +30,9 @@ public class RaceDTO {
 	private int lapsQuantity;
 	private int lapsDone;
 	
-	private WeatherDTO weatherDTO;
+	private WeatherDTO weather;
 
-	private TrackDTO trackDTO;
+	private TrackDTO track;
 
-    private List<RaceResultDTO> resultsDTO;
+    private List<RaceResultDTO> results;
 }

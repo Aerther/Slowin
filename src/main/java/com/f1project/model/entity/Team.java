@@ -2,7 +2,7 @@ package com.f1project.model.entity;
 
 import java.util.List;
 
-import com.f1project.helper.enums.RaceStatus;
+import com.f1project.utils.enums.RaceStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

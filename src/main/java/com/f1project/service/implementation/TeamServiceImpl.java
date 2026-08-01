@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.f1project.exception.ResourceNotFoundException;
-import com.f1project.helper.CentralMapper;
 import com.f1project.model.entity.Team;
 import com.f1project.repository.TeamRepository;
 import com.f1project.request.TeamRequest;
 import com.f1project.service.TeamService;
+import com.f1project.utils.mapper.CentralMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -53,7 +53,8 @@ public class TeamServiceImpl implements TeamService {
 	public List<Team> createPreMadeTeams() {
 		List<Team> teams = new ArrayList<>(
 			List.of(
-				new Team(null, "RedBull", 100, 100, 1.0, 100, "#000000", "")
+				new Team(null, "Red Bull", 100, 100, 1.0, 100, "#000000", ""),
+				new Team(null, "Ferrari", 100, 100, 1.0, 100, "#000000", "")
 			)	
 		);
 		

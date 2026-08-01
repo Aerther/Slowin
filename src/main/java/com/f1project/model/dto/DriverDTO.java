@@ -12,4 +12,5 @@ public class DriverDTO {
 	private String name;
 	private int level;
 	private CountryDTO nationality;
+	private TeamDTO team;
 }

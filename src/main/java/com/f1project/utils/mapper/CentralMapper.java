@@ -1,4 +1,4 @@
-package com.f1project.helper;
+package com.f1project.utils.mapper;
 
 import java.util.List;
 
@@ -44,30 +44,20 @@ public interface CentralMapper {
 	
 	Team request2Team(TeamRequest TeamRequest);
 	
-	@Mapping(source = "country", target = "countryDTO")
 	TrackDTO track2DTO(Track track);
 	
-	@Mapping(source = "countryDTO", target = "country")
 	Track DTO2track(TrackDTO trackDTO);
 	
 	Track request2Track(TrackRequest trackRequest);
 	
-	@Mapping(source = "track", target = "trackDTO")
-    @Mapping(source = "weather", target = "weatherDTO")
-    @Mapping(source = "results", target = "resultsDTO")
     RaceDTO race2DTO(Race race);
 
-    @Mapping(source = "trackDTO", target = "track")
-    @Mapping(source = "weatherDTO", target = "weather")
-    @Mapping(source = "resultsDTO", target = "results")
     Race DTO2race(RaceDTO raceDTO);
 	
 	Race request2Race(RaceRequest raceRequest);
 	
-	@Mapping(source = "driver", target = "driverDTO")
 	RaceResultDTO raceResult2DTO(RaceResult raceResult);
 	
-	@Mapping(source = "driverDTO", target = "driver")
 	RaceResult DTO2raceResult(RaceResultDTO raceResultDTO);
 	
 	Weather DTO2weather(WeatherDTO weatherDTO);

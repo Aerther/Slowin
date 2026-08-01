@@ -41,24 +41,24 @@
                             <td class="cell-align-middle">
                                 <div class="cell-with-icon">
                                     <figure class="flag-icon">
-                                        <img class="fig-img" th:src="${race.trackDTO.countryDTO.flagUrl}" th:alt="${race.trackDTO.countryDTO.name}">
+                                        <img class="fig-img" th:src="${race.track.country.flagUrl}" th:alt="${race.track.country.name}">
                                     </figure>
 
-                                    <p th:text="${race.trackDTO.name}">Pista</p>
+                                    <p th:text="${race.track.name}">Pista</p>
                                 </div>
                             </td>
 
                             <td class="cell-highlight" th:text="${race.lapsQuantity}">Voltas</td>
 
-                            <td class="cell-highlight" th:text="${race.resultsDTO.size()}">Quant. de Pilotos</td>
+                            <td class="cell-highlight" th:text="${race.results.size()}">Quant. de Pilotos</td>
 
                             <td class="cell-align-middle">
                                 <div class="weather-value-wrapper">
                                     <img class="weather-icon"
-                                        th:src="@{${race.weatherDTO.weatherCondition.getWeatherUrl()}}"
-                                        th:alt="${race.weatherDTO.weatherCondition.description}">
+                                        th:src="@{${race.weather.weatherCondition.getWeatherUrl()}}"
+                                        th:alt="${race.weather.weatherCondition.description}">
 
-                                    <span th:text="${race.weatherDTO.weatherCondition.description}">
+                                    <span th:text="${race.weather.weatherCondition.description}">
                                         Ensolarado
                                     </span>
                                 </div>

@@ -1,6 +1,6 @@
 package com.f1project.model.dto;
 
-import com.f1project.helper.enums.WeatherCondition;
+import com.f1project.utils.enums.WeatherCondition;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

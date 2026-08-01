@@ -1,14 +1,14 @@
-package com.f1project.helper;
+package com.f1project.utils;
 
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import com.f1project.helper.enums.Mistake;
-import com.f1project.helper.enums.RaceStatus;
-import com.f1project.helper.enums.Tyre;
-import com.f1project.helper.enums.WeatherCondition;
 import com.f1project.model.entity.Driver;
+import com.f1project.utils.enums.Mistake;
+import com.f1project.utils.enums.RaceStatus;
+import com.f1project.utils.enums.Tyre;
+import com.f1project.utils.enums.WeatherCondition;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

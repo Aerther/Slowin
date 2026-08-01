@@ -1,4 +1,4 @@
-package com.f1project.helper.enums;
+package com.f1project.utils.enums;
 
 import java.util.Arrays;
 import java.util.List;

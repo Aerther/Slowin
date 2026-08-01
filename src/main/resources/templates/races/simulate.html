@@ -9,7 +9,7 @@
             <div>
                 <div class="title-wrapper">
                     <h1 th:text="${race.name}">Grande Prêmio de Interlagos</h1>
-                    <p class="subtitle" th:text="${race.trackDTO.name + ' • ' + race.trackDTO.countryDTO.brazilian}">
+                    <p class="subtitle" th:text="${race.track.name + ' • ' + race.track.country.brazilian}">
                         Autódromo de Interlagos • Brasil
                     </p>
                 </div>
@@ -56,11 +56,11 @@
                 <div class="sim-stat">
                     <div class="weather-value-wrapper">
                         <img class="weather-icon"
-                            th:src="@{${race.weatherDTO.weatherCondition.getWeatherUrl()}}"
-                            th:alt="${race.weatherDTO.weatherCondition.description}">
+                            th:src="@{${race.weather.weatherCondition.getWeatherUrl()}}"
+                            th:alt="${race.weather.weatherCondition.description}">
 
                         <span class="sim-stat-value" 
-                            th:text="${race.weatherDTO.weatherCondition.description}">
+                            th:text="${race.weather.weatherCondition.description}">
                             Ensolarado
                         </span>
                     </div>
@@ -94,7 +94,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="result : ${race.resultsDTO}">
+                        <tr th:each="result : ${race.results}">
                             <td class="text-center font-bold">
                                 <span class="position-badge" th:classappend="'pos-' + ${result.position}" th:text="${result.position}">
                                     1
@@ -105,14 +105,14 @@
                                 <div class="driver-cell">
                                     <figure class="flag-icon">
                                         <img class="fig-img" 
-                                            th:src="${result.driverDTO.nationality.flagUrl}" 
-                                            th:alt="${result.driverDTO.nationality.name}">
+                                            th:src="${result.driver.nationality.flagUrl}" 
+                                            th:alt="${result.driver.nationality.name}">
                                     </figure>
 
-                                    <span class="driver-name" th:text="${result.driverDTO.name}">L. Hamilton</span>
+                                    <span class="driver-name" th:text="${result.driver.name}">L. Hamilton</span>
 
                                     <span class="driver-level-badge" 
-                                        th:text="'Lvl ' + ${result.driverDTO.level}">
+                                        th:text="'Lvl ' + ${result.driver.level}">
                                         Lvl 100
                                     </span>
 

@@ -34,7 +34,7 @@
                             <option value="" disabled selected>Selecione uma pista...</option>
                             <option th:each="track : ${tracks}" 
                                     th:value="${track.id}" 
-                                    th:text="${track.name + ' (' + track.countryDTO.brazilian + ')'}">
+                                    th:text="${track.name + ' (' + track.country.brazilian + ')'}">
                             </option>
                         </select>
                     </div>

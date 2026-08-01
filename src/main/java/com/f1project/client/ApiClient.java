@@ -9,9 +9,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.f1project.client.response.CountryResponse;
 import com.f1project.client.response.WeatherResponse;
-import com.f1project.helper.MapperClient;
 import com.f1project.model.dto.CountryDTO;
 import com.f1project.model.dto.WeatherDTO;
+import com.f1project.utils.mapper.MapperClient;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

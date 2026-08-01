@@ -19,5 +19,5 @@ public class TrackDTO {
 	private double latitude;
 	private double longitude;
 	
-	private CountryDTO countryDTO;
+	private CountryDTO country;
 }

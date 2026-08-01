@@ -31,4 +31,8 @@ public class Driver {
 	@ManyToOne
 	@JoinColumn(name = "country_id")
 	private Country nationality;
+	
+	@ManyToOne
+	@JoinColumn(name = "team_id")
+	private Team team;
 }

@@ -12,4 +12,5 @@ public class DriverRequest {
 	private String name;
 	private int level;
 	private Long countryId;
+	private Long teamId;
 }

@@ -1,7 +1,7 @@
 package com.f1project.model.entity;
 
-import com.f1project.helper.enums.DriverStatus;
-import com.f1project.helper.enums.Tyre;
+import com.f1project.utils.enums.DriverStatus;
+import com.f1project.utils.enums.Tyre;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

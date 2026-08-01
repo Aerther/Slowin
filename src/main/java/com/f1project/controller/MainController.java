@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.f1project.service.CountryService;
 import com.f1project.service.DriverService;
+import com.f1project.service.TeamService;
 import com.f1project.service.TrackService;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class MainController {
 	private CountryService countryService;
 	private DriverService driverService;
 	private TrackService trackService;
+	private TeamService teamService;
 	
 	@GetMapping
 	public String mainPageRedirect() {
@@ -29,6 +31,7 @@ public class MainController {
 	public String createAllEntitys() {
 		this.countryService.saveCountriesFromClient();
 		this.trackService.saveTracksFromTxt();
+		this.teamService.createPreMadeTeams();
 		this.driverService.createPreMadeDrivers();
 		
 		return "redirect:/drivers";
