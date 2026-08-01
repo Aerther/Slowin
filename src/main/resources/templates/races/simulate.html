@@ -14,8 +14,45 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="sim-header-stats">
+                <div class="sim-stat title-wrapper" th:switch="${race.raceStatus.description}">
+                    <span class="sim-stat-value status-flag status-sc" 
+                          th:case="'SAFETYCAR'"
+                          th:if="${race.lapsSafetyCarDuration > 1}"
+                          th:text="'SAFETY CAR (' + ${race.lapsSafetyCarDuration} + ' voltas)'">
+                        SAFETY CAR (2 voltas)
+                    </span>
+
+                    <span class="sim-stat-value status-flag status-sc-ending" 
+                          th:case="'SAFETYCAR'"
+                          th:if="${race.lapsSafetyCarDuration == 1}">
+                        SAFETY CAR ENTRANDO
+                    </span>
+
+                    <span class="sim-stat-value status-flag status-vsc" 
+                          th:case="'VSC'"
+                          th:if="${race.lapsSafetyCarDuration > 1}">
+                        VSC ATIVO
+                    </span>
+
+                    <span class="sim-stat-value status-flag status-vsc-ending" 
+                          th:case="'VSC'"
+                          th:if="${race.lapsSafetyCarDuration == 1}">
+                        VSC SAINDO
+                    </span>
+
+                    <span class="sim-stat-value status-flag status-finished" 
+                          th:case="'FINISHED'">
+                        FINALIZADA
+                    </span>
+
+                    <span class="sim-stat-value status-flag status-green" 
+                          th:case="*">
+                        Pista Livre
+                    </span>
+                </div>
+
                 <div class="sim-stat">
                     <div class="weather-value-wrapper">
                         <img class="weather-icon"
@@ -28,6 +65,7 @@
                         </span>
                     </div>
                 </div>
+
                 <div class="sim-stat title-wrapper">
                     <span class="sim-stat-label">Progresso</span>
                     <span class="sim-stat-value accent" th:text="${race.lapsDone + ' / ' + race.lapsQuantity}">
@@ -48,6 +86,7 @@
                             <th class="text-right">Dif.</th>
                             <th class="text-right">Dif. para o 1°</th>
                             <th class="text-center">Pneu</th>
+                            <th class="text-center">Stint</th>
                             <th class="text-center">Pit Stops</th>
                             <th class="text-right">Volta mais Rápida</th>
                             <th class="text-right">Última Volta</th>
@@ -77,13 +116,18 @@
                                         Lvl 100
                                     </span>
 
+                                    <span class="driver-status-badge status-fl" th:if="${race.fastestLap > 0 and result.fastestLap == race.fastestLap}">
+                                        <img th:src="@{/images/stopwatch.png}" alt="Fastest Lap" class="fl-icon">
+                                    </span>
+
                                     <span class="driver-status-badge status-pitted" 
                                         th:if="${result.driverStatus.description == 'PITTED'}">
                                         PIT
                                     </span>
 
                                     <span class="driver-status-badge status-dnf" 
-                                        th:if="${result.driverStatus.description == 'DNF'}">
+                                        th:if="${result.driverStatus.description == 'DNF'}" 
+                                        th:text="'DNF (Lap ' + ${result.lapRetired} + ')'">
                                         DNF
                                     </span>
                                 </div>
@@ -110,11 +154,26 @@
                                     <span class="tyre-usage" th:text="${result.tyreUsage + '%'}">100%</span>
                                 </div>
                             </td>
+
+                            <td class="text-center font-mono" th:text="${result.stint}">Stint</td>
+
                             <td class="text-center">
                                 <span class="sim-pit-badge" th:text="${result.pitStopQuantity}">1</span>
                             </td>
 
-                            <td class="text-right font-mono" th:text="${result.fastestLapTime}">Volta mais rápida</td>
+                            <td class="text-right font-mono">
+                                <span th:if="${race.fastestLap > 0 and result.fastestLap == race.fastestLap}" 
+                                      class="fastest-lap-badge" 
+                                      th:text="${result.fastestLapTime}">
+                                    1:18.405
+                                </span>
+
+                                <span th:unless="${race.fastestLap > 0 and result.fastestLap == race.fastestLap}" 
+                                      th:text="${result.fastestLapTime}">
+                                    1:18.405
+                                </span>
+                            </td>
+
                             <td class="text-right font-mono" th:text="${result.currentLapTime}">1:18.405</td>
                             <td class="text-right font-mono font-bold" th:text="${result.totalRaceTime}">15:23.890</td>
                         </tr>

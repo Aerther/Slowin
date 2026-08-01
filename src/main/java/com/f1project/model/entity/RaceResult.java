@@ -40,9 +40,11 @@ public class RaceResult {
 	private String currentLapTime;
 	private String totalRaceTime;
 	
+	private int lapRetired = 0;
 	private DriverStatus driverStatus = DriverStatus.RACING;
 	private Tyre tyre = Tyre.SOFT;
-	private int tyreUsage = 100; 
+	private int tyreUsage = 100;
+	private int stint = 0;
 	
 	private int position = 1;
 	private int lastPosition = 1;

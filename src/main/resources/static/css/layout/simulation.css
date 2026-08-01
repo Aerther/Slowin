@@ -363,3 +363,72 @@
 .pos-equal {
     color: #6b7280;
 }
+
+.driver-status-badge.status-fl {
+    background-color: #8a2be2;
+    padding: 0px 0px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fl-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    
+    filter: brightness(0) invert(1); 
+}
+
+.fastest-lap-badge {
+    background-color: rgba(138, 43, 226, 0.2);
+    color: #b15eff;
+    border: 1px solid #8a2be2;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status-flag {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.status-green {
+    color: #2e7d32;
+    background-color: #e8f5e9;
+}
+
+.status-sc {
+    color: #d84315;
+    background-color: #fbe9e7;
+    animation: pulse 1.5s infinite;
+}
+
+.status-sc-ending {
+    color: #e65100;
+    background-color: #fff3e0;
+    border: 1px solid #ff9800;
+}
+
+.status-vsc {
+    color: #f57f17;
+    background-color: #fffde7;
+}
+
+.status-vsc-ending {
+    color: #f57f17;
+    background-color: #fffde7;
+    border: 1px solid #fbc02d;
+}
+
+.status-finished {
+    color: #eceff1;
+    background-color: #263238;
+}

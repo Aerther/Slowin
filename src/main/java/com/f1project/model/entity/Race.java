@@ -42,7 +42,9 @@ public class Race {
 	private LocalDateTime dateStarted;
 	
 	private RaceStatus raceStatus = RaceStatus.CREATED;
+	private int lapsSafetyCarDuration = 0;
 	
+	private double fastestLap = 0;
 	private int lapsQuantity;
 	private int lapsDone;
 	

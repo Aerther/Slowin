@@ -19,8 +19,8 @@ public enum Tyre {
 	
 	private String description;
 	private boolean isDryTyre;
-	private int timeLostDownBound;
-	private int timeLostUpperBound;
+	private int degradationLostDownBound;
+	private int degradationLostUpperBound;
 	private String imageName;
 	
 	public String getTyreUrl() {

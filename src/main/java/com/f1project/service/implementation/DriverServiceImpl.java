@@ -86,7 +86,50 @@ public class DriverServiceImpl implements DriverService {
 	public List<Driver> createPreMadeDrivers() {
 		List<Driver> drivers = new ArrayList<>();
 		
-		List<String> names = new ArrayList<>(List.of("Arthur", "Paulo", "Mathias", "Bino", "Marcelo", "Nícolas", "Leonardo"));
+		List<String> names = new ArrayList<>(List.of(
+			    "Lewis Hamilton",
+			    "Michael Schumacher",
+			    "Ayrton Senna",
+			    "Max Verstappen",
+			    "Juan Manuel Fangio",
+			    "Alain Prost",
+			    "Sebastian Vettel",
+			    "Fernando Alonso",
+			    "Niki Lauda",
+			    "Nelson Piquet",
+			    "Jackie Stewart",
+			    "Emerson Fittipaldi",
+			    "Jim Clark",
+			    "Mika Häkkinen",
+			    "Nigel Mansell",
+			    "Kimi Räikkönen",
+			    "Jenson Button",
+			    "Nico Rosberg",
+			    "Jacques Villeneuve",
+			    "Damon Hill",
+			    "Graham Hill",
+			    "James Hunt",
+			    "Mario Andretti",
+			    "Jack Brabham",
+			    "Alberto Ascari",
+			    "John Surtees",
+			    "Phil Hill",
+			    "Alan Jones",
+			    "Keke Rosberg",
+			    "Jody Scheckter",
+			    "Jochen Rindt",
+			    "Denny Hulme",
+			    "Mike Hawthorn",
+			    "Giuseppe Farina",
+			    "Lando Norris",
+			    "Arthur",
+			    "Paulo",
+			    "Leonardo",
+			    "Marcelo",
+			    "Mathias",
+			    "Bino",
+			    "Nícolas"
+		));
 		
 		Country brasil = this.countryService.findCountryByBrazilian("Brasil");
 		

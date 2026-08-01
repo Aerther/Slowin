@@ -24,7 +24,9 @@ public class RaceDTO {
 	private LocalDateTime dateStarted;
 	
 	private RaceStatus raceStatus;
+	private int lapsSafetyCarDuration;
 	
+	private double fastestLap;
 	private int lapsQuantity;
 	private int lapsDone;
 	

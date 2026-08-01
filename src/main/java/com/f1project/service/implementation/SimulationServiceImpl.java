@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.f1project.client.ApiClient;
 import com.f1project.helper.CentralMapper;
 import com.f1project.helper.FormatUtils;
+import com.f1project.helper.LapCondition;
 import com.f1project.helper.Simulation;
 import com.f1project.helper.enums.DriverStatus;
 import com.f1project.helper.enums.RaceStatus;
@@ -36,10 +37,13 @@ public class SimulationServiceImpl implements SimulationService {
 	@Override
 	public Race simulateRace(Long raceId, int laps) {
 		Race race = this.raceService.findRaceById(raceId);
+		double raceFastestLap = (race.getFastestLap() > 0) ? race.getFastestLap() : Double.MAX_VALUE;
+		RaceStatus raceStatus = race.getRaceStatus();
+		int lapsSafetyCarDuration = race.getLapsSafetyCarDuration();
 		
 		if(race.getRaceStatus() == RaceStatus.FINISHED) return null;
 		
-		if(laps > 0) {
+		if(laps > 0 && lapsSafetyCarDuration == 0) {
 			race.setRaceStatus(RaceStatus.ONGOING);
 		}
 		
@@ -47,7 +51,8 @@ public class SimulationServiceImpl implements SimulationService {
 			laps = race.getLapsQuantity() - race.getLapsDone();
 		}
 		
-		race.setLapsDone(laps + race.getLapsDone());
+		int lapsDone = race.getLapsDone();
+		race.setLapsDone(laps + lapsDone);
 		
 		WeatherCondition weatherCondition = race.getWeather().getWeatherCondition();
 		
@@ -56,67 +61,94 @@ public class SimulationServiceImpl implements SimulationService {
 		
 		List<RaceResult> raceResults = race.getResults();
 		
-		for (RaceResult raceResult : raceResults) {
-		    Driver driver = raceResult.getDriver();
+		for (int currentLap = 0; currentLap < laps; currentLap++) {
+	        
+	        if (raceStatus.isSafety()) {
+	            if (lapsSafetyCarDuration > 0) {
+	                lapsSafetyCarDuration = lapsSafetyCarDuration - 1;
+	            }
+	            
+	            if (lapsSafetyCarDuration == 0) {
+	                raceStatus = RaceStatus.ONGOING;
+	            }
+	        }
 
-		    double totalTime = raceResult.getRaceTime();
-		    int tyreUsage = raceResult.getTyreUsage();
-		    int pitStop = raceResult.getPitStopQuantity();
-		    Tyre tyre = raceResult.getTyre();
-		    DriverStatus driverStatus = raceResult.getDriverStatus();
-		    
-		    if(driverStatus == DriverStatus.RETIRED) continue;
-		    
-		    double previousFastest = raceResult.getFastestLap();
-		    double bestLap = (previousFastest > 0) ? previousFastest : Double.MAX_VALUE;
-		    
-		    double lastSimulatedLap = 0.0;
+	        boolean safetyCarTriggeredThisLap = false;
 
-		    for (int i = 0; i < laps; i++) {
-		    	if(driverStatus == DriverStatus.RETIRED) break;
-		    	
-		    	driverStatus = DriverStatus.RACING;
-		    	
-		        boolean isPitting = this.simulation.isDriverPitting(tyreUsage);
-		        boolean isRetiring = this.simulation.isDriverRetiring();
-		        
-		        double lapTime = this.simulateLap(driver, trackTime, tyreUsage, isPitting);
-		        
-		        tyreUsage = tyreUsage - this.simulation.useTyre(tyre);
-		        tyreUsage = Math.max(tyreUsage, 0);
-		        
-		        if(isPitting) {
-		        	tyreUsage = 100;
-		        	pitStop += 1;
-		        	
-		        	driverStatus = DriverStatus.PITTED;
-		        	tyre = Tyre.chooseRandomTyre(weatherCondition);
-		        }
-		        
-		        if(isRetiring) {
-		        	driverStatus = DriverStatus.RETIRED;
-		        }
-		        
-		        totalTime += lapTime;
-		        lastSimulatedLap = lapTime;
+	        for (RaceResult raceResult : raceResults) {
+	            if (raceResult.getDriverStatus() == DriverStatus.RETIRED) continue;
 
-		        if (lapTime < bestLap) {
-		            bestLap = lapTime;
-		        }
-		    }
+	            raceResult.setDriverStatus(DriverStatus.RACING);
 
-		    raceResult.setDriverStatus(driverStatus);
-		    raceResult.setTyre(tyre);
-		    raceResult.setPitStopQuantity(pitStop);
-		    raceResult.setTyreUsage(tyreUsage);
-		    raceResult.setFastestLap(bestLap);
-		    raceResult.setCurrentLap(lastSimulatedLap);
-		    raceResult.setRaceTime(totalTime);
+	            int tyreUsage = raceResult.getTyreUsage();
+	            Tyre tyre = raceResult.getTyre();
+	            double lapTime = 0;
 
-		    raceResult.setFastestLapTime(FormatUtils.formatLapTime(bestLap));
-		    raceResult.setCurrentLapTime(FormatUtils.formatLapTime(lastSimulatedLap));
-		    raceResult.setTotalRaceTime(FormatUtils.formatLapTime(totalTime));
-		}
+	            boolean isTyreFlat = this.simulation.isTyreFlat(tyreUsage);
+	            boolean isTyreWrong = this.simulation.isTyreWrong(weatherCondition, tyre);
+	            boolean isPitting = this.simulation.isDriverPitting(tyreUsage, isTyreWrong, isTyreFlat);
+	            boolean isRetiring = this.simulation.isDriverRetiring(isTyreWrong);
+	            boolean isSafetyCarOn = this.simulation.isSafetyCarOn(raceStatus);
+
+	            LapCondition lapCondition = new LapCondition(
+	                isPitting, isTyreWrong, isTyreFlat, isRetiring, isSafetyCarOn
+	            );
+
+	            if(lapCondition.isSafetyCarOn()) {
+	            	lapTime = this.simulateLapSafetyCarOnTime(raceResult, raceStatus, trackTime, lapCondition);
+	            } else {
+	            	lapTime = this.simulateLap(raceResult, raceStatus, trackTime, lapCondition);
+	            }
+
+	            raceResult.setRaceTime(raceResult.getRaceTime() + lapTime);
+	            raceResult.setCurrentLap(lapTime);
+
+	            if (lapTime < raceResult.getFastestLap() || raceResult.getFastestLap() == 0) {
+	                raceResult.setFastestLap(lapTime);
+	                raceResult.setFastestLapTime(FormatUtils.formatLapTime(lapTime));
+	            }
+	            
+	            if (lapTime < raceFastestLap) {
+	                raceFastestLap = lapTime;
+	            }
+
+	            tyreUsage = Math.max(0, tyreUsage - this.simulation.useTyre(raceStatus, tyre));
+	            raceResult.setStint(raceResult.getStint() + 1);
+
+	            if (lapCondition.isPitting()) {
+	                tyreUsage = 100;
+	                raceResult.setPitStopQuantity(raceResult.getPitStopQuantity() + 1);
+	                raceResult.setStint(0);
+	                raceResult.setDriverStatus(DriverStatus.PITTED);
+	                raceResult.setTyre(Tyre.chooseRandomTyre(weatherCondition));
+	            }
+
+	            if (lapCondition.isRetiring()) {
+	                raceResult.setDriverStatus(DriverStatus.RETIRED);
+	                raceResult.setLapRetired(currentLap + lapsDone);
+	                
+	                if (this.simulation.isSafetyCarComing()) {
+	                    safetyCarTriggeredThisLap = true;
+	                }
+	            }
+
+	            raceResult.setTyreUsage(tyreUsage);
+	            raceResult.setCurrentLapTime(FormatUtils.formatLapTime(lapTime));
+	            raceResult.setTotalRaceTime(FormatUtils.formatLapTime(raceResult.getRaceTime()));
+	        }
+	        
+	        if(raceStatus == RaceStatus.SAFETYCAR) {
+	        	this.compactDriversUnderSafetyCar(raceResults);
+	        }
+
+	        if (safetyCarTriggeredThisLap) {
+	        	raceStatus = RaceStatus.getRandomSafetyStatus(raceStatus);
+	            
+	            lapsSafetyCarDuration = 11;
+	        }
+	        
+	        this.updateDriversPositions(raceResults);
+	    }
 		
 		List<RaceResult> activeResults = this.orderRaceResultsByRaceTime(raceResults);
 		
@@ -130,16 +162,11 @@ public class SimulationServiceImpl implements SimulationService {
 			activeResults.get(0).setDifferenceToFirst(0);
 			activeResults.get(0).setDifferenceToFirstTime(FormatUtils.formatLapTime(0));
 			activeResults.get(0).setDifferenceTime(FormatUtils.formatLapTime(0));
-			activeResults.get(0).setLastPosition(activeResults.get(0).getPosition());
-			activeResults.get(0).setPosition(1);
 		}
 		
 		for(int i = 1; i < activeResults.size(); i++) {
 			RaceResult raceResult = activeResults.get(i);
 			RaceResult driverInFront = activeResults.get(i - 1);
-			
-			raceResult.setLastPosition(raceResult.getPosition());
-			raceResult.setPosition(i + 1);
 			
 			double difference = raceResult.getRaceTime() - driverInFront.getRaceTime();
 			raceResult.setDifference(difference);
@@ -167,8 +194,6 @@ public class SimulationServiceImpl implements SimulationService {
 		for(int i = 0; i < retiredResults.size(); i++) {
 			RaceResult raceResult = retiredResults.get(i);
 			
-			raceResult.setPosition(lastPosition + i + 1);
-			raceResult.setLastPosition(lastPosition + i + 1);
 			raceResult.setDifference(0);
 			raceResult.setDifferenceToFirst(0);
 			raceResult.setDifferenceToFirstTime("DNF");
@@ -178,8 +203,11 @@ public class SimulationServiceImpl implements SimulationService {
 		race.getResults().clear();
         race.getResults().addAll(activeResults);
         race.getResults().addAll(retiredResults);
-		
+	
 		race.setResults(raceResults);
+		race.setRaceStatus(raceStatus);
+		race.setFastestLap(raceFastestLap);
+        race.setLapsSafetyCarDuration(lapsSafetyCarDuration);
 		
 		if(race.getLapsQuantity() <= race.getLapsDone()) {
 			race.setRaceStatus(RaceStatus.FINISHED);
@@ -188,6 +216,58 @@ public class SimulationServiceImpl implements SimulationService {
 		Race savedRace = this.raceService.updateRace(race);
 		
 		return savedRace;
+	}
+	
+	private void updateDriversPositions(List<RaceResult> raceResults) {
+	    List<RaceResult> activeResults = this.orderRaceResultsByRaceTime(raceResults);
+	    List<RaceResult> retiredResults = this.orderRaceResultsRetiredByRaceTime(raceResults);
+
+	    for (int i = 0; i < activeResults.size(); i++) {
+	        RaceResult result = activeResults.get(i);
+	        
+	        result.setLastPosition(result.getPosition());
+	        
+	        result.setPosition(i + 1);
+	    }
+
+	    int offset = activeResults.size();
+	    for (int i = 0; i < retiredResults.size(); i++) {
+	        RaceResult result = retiredResults.get(i);
+	        
+	        int pos = offset + i + 1;
+	        
+	        result.setLastPosition(result.getPosition());
+	        result.setPosition(pos);
+	    }
+
+	    raceResults.clear();
+	    raceResults.addAll(activeResults);
+	    raceResults.addAll(retiredResults);
+	}
+	
+	private void compactDriversUnderSafetyCar(List<RaceResult> raceResults) {
+		List<RaceResult> activeResults = this.orderRaceResultsByRaceTime(raceResults);
+	    
+	    if (activeResults.size() <= 1) return;
+	    
+	    double targetGap = 0.8;
+
+	    for (int i = 1; i < activeResults.size(); i++) {
+	        RaceResult current = activeResults.get(i);
+	        RaceResult carAhead = activeResults.get(i - 1);
+
+	        if (current.getDriverStatus() == DriverStatus.PITTED) continue;
+
+	        double currentGap = current.getRaceTime() - carAhead.getRaceTime();
+
+	        if (currentGap > targetGap) {
+	            double reduction = Math.min(currentGap - targetGap, 15.0); 
+	            double newRaceTime = current.getRaceTime() - reduction;
+	            
+	            current.setRaceTime(newRaceTime);
+	            current.setTotalRaceTime(FormatUtils.formatLapTime(newRaceTime));
+	        }
+	    }
 	}
 	
 	public List<RaceResult> orderRaceResultsByRaceTime(List<RaceResult> raceResults) {
@@ -221,18 +301,60 @@ public class SimulationServiceImpl implements SimulationService {
 		return savedRace;
 	}
 	 
-	private double simulateLap(Driver driver, double trackFastestTime, int tyreUsage, boolean isPitting) {
+	public double simulateLapSafetyCarOnTime(RaceResult raceResult, RaceStatus raceStatus, double trackFastestTime, LapCondition lapCondition) {
+		Driver driver = raceResult.getDriver();
+		
 		int level = driver.getLevel();
+		int tyreUsage = raceResult.getTyreUsage();
+		
+		double lapTime = trackFastestTime;
+		
+		if(lapCondition.isTyreWrong()) {
+			lapTime += this.simulation.calculateTyreWrongTime(raceStatus);
+		}
+		
+		if(lapCondition.isTyreFlat()) {
+			lapTime += this.simulation.calculateTyreFlatTime(raceStatus);
+		}
+		
+		if(lapCondition.isPitting()) {
+			lapTime += this.simulation.calculatePitStopTime(raceStatus);
+		}
+		
+		if(lapCondition.isSafetyCarOn()) {
+			lapTime += this.simulation.calculateSafetyCarOnTime();
+		}
+		
+		return lapTime;
+	}
+	
+	private double simulateLap(RaceResult raceResult, RaceStatus raceStatus, double trackFastestTime, LapCondition lapCondition) {
+		Driver driver = raceResult.getDriver();
+		
+		int level = driver.getLevel();
+		int tyreUsage = raceResult.getTyreUsage();
 		
 		double lapTime = trackFastestTime;
 		
 		lapTime += this.simulation.calculateLapVariation(); 
-		lapTime += this.simulation.calculateDriverLevelVariation(level);
-		lapTime += this.simulation.calculateDriverMistake(level);
+		lapTime += this.simulation.calculateDriverLevelVariation(raceStatus, level);
+		lapTime += this.simulation.calculateDriverMistake(raceStatus, lapCondition, level);
 		lapTime += this.simulation.calculateTyreUsage(tyreUsage);
 		
-		if(isPitting) {
-			lapTime += this.simulation.calculatePitStopTime();
+		if(lapCondition.isTyreWrong()) {
+			lapTime += this.simulation.calculateTyreWrongTime(raceStatus);
+		}
+		
+		if(lapCondition.isTyreFlat()) {
+			lapTime += this.simulation.calculateTyreFlatTime(raceStatus);
+		}
+		
+		if(lapCondition.isPitting()) {
+			lapTime += this.simulation.calculatePitStopTime(raceStatus);
+		}
+		
+		if(lapCondition.isSafetyCarOn()) {
+			lapTime += this.simulation.calculateSafetyCarOnTime();
 		}
 		
 		return lapTime;

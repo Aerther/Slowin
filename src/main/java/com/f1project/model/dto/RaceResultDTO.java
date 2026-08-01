@@ -28,9 +28,11 @@ public class RaceResultDTO {
 	private String currentLapTime;
 	private String totalRaceTime;
 	
+	private int lapRetired;
 	private DriverStatus driverStatus;
 	private Tyre tyre;
 	private int tyreUsage;
+	private int stint;
 	
 	private int position;
 	private int lastPosition;

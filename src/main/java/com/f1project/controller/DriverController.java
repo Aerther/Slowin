@@ -81,6 +81,13 @@ public class DriverController {
 		return "redirect:/drivers";
 	}
 	
+	@GetMapping("/delete/all")
+	public String deleteAllDrivers() {
+		this.driverService.deleteAllDrivers();
+		
+		return "redirect:/drivers";
+	}
+	
 	// SHOW OPERATION
 	
 	@GetMapping
