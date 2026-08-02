@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.f1project.model.dto.CountryDTO;
 import com.f1project.model.dto.DriverDTO;
 import com.f1project.model.dto.RaceDTO;
+import com.f1project.model.dto.TeamDTO;
 import com.f1project.model.dto.TrackDTO;
 
 public class SortList {
@@ -43,5 +44,9 @@ public class SortList {
 	
 	public static List<RaceDTO> sortRacesByName(List<RaceDTO> races) {
 		return sort(races, RaceDTO::getName);
+	}
+	
+	public static List<TeamDTO> sortTeamsByName(List<TeamDTO> teams) {
+		return sort(teams, TeamDTO::getName);
 	}
 }

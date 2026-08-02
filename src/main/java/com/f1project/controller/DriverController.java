@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.f1project.model.dto.CountryDTO;
 import com.f1project.model.dto.DriverDTO;
+import com.f1project.model.dto.TeamDTO;
 import com.f1project.request.DriverRequest;
 import com.f1project.service.CountryService;
 import com.f1project.service.DriverService;
+import com.f1project.service.TeamService;
 import com.f1project.utils.SortList;
 import com.f1project.utils.mapper.CentralMapper;
 
@@ -30,15 +31,19 @@ public class DriverController {
 	
 	private DriverService driverService;
 	private CountryService countryService;
+	private TeamService teamService;
 	private CentralMapper mapper;
 	
 	// CREATE OPERATION
 	
 	@GetMapping("/create")
 	public String showDriverCreationForm(Model model) {
-		List<CountryDTO> countriesDTO = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
+		List<CountryDTO> countries = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
+		List<TeamDTO> teams = SortList.sortTeamsByName(mapper.teams2DTOList(this.teamService.findAllTeams()));
 		
-		model.addAttribute("countries", countriesDTO);
+		model.addAttribute("countries", countries);
+		model.addAttribute("teams", teams);
+		
 		model.addAttribute("activePage", "drivers");
 		
 		return "drivers/create";
@@ -56,10 +61,13 @@ public class DriverController {
 	@GetMapping("/update/{driverId}")
 	public String showDriverEditForm(@PathVariable("driverId") Long driverId, Model model) {
 		DriverDTO driverDTO = mapper.driver2DTO(this.driverService.findDriverById(driverId));
-		List<CountryDTO> countriesDTO = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
 		
-		model.addAttribute("driver", driverDTO);
-		model.addAttribute("countries", countriesDTO);
+		List<CountryDTO> countries = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
+		List<TeamDTO> teams = SortList.sortTeamsByName(mapper.teams2DTOList(this.teamService.findAllTeams()));
+		
+		model.addAttribute("countries", countries);
+		model.addAttribute("teams", teams);
+		
 		model.addAttribute("activePage", "drivers");
 		
 		return "drivers/update";

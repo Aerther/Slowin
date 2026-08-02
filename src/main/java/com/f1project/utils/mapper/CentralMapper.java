@@ -56,8 +56,10 @@ public interface CentralMapper {
 	
 	Race request2Race(RaceRequest raceRequest);
 	
+	@Mapping(target = "race", ignore = true)
 	RaceResultDTO raceResult2DTO(RaceResult raceResult);
 	
+	@Mapping(target = "race", ignore = true)
 	RaceResult DTO2raceResult(RaceResultDTO raceResultDTO);
 	
 	Weather DTO2weather(WeatherDTO weatherDTO);

@@ -98,59 +98,61 @@ public class DriverServiceImpl implements DriverService {
 	public List<Driver> createPreMadeDrivers() {
 		List<Driver> drivers = new ArrayList<>();
 		
-		List<String> names = new ArrayList<>(List.of(
-			    "Lewis Hamilton",
-			    "Michael Schumacher",
-			    "Ayrton Senna",
-			    "Max Verstappen",
-			    "Juan Manuel Fangio",
-			    "Alain Prost",
-			    "Sebastian Vettel",
-			    "Fernando Alonso",
-			    "Niki Lauda",
-			    "Nelson Piquet",
-			    "Jackie Stewart",
-			    "Emerson Fittipaldi",
-			    "Jim Clark",
-			    "Mika Häkkinen",
-			    "Nigel Mansell",
-			    "Kimi Räikkönen",
-			    "Jenson Button",
-			    "Nico Rosberg",
-			    "Jacques Villeneuve",
-			    "Damon Hill",
-			    "Graham Hill",
-			    "James Hunt",
-			    "Mario Andretti",
-			    "Jack Brabham",
-			    "Alberto Ascari",
-			    "John Surtees",
-			    "Phil Hill",
-			    "Alan Jones",
-			    "Keke Rosberg",
-			    "Jody Scheckter",
-			    "Jochen Rindt",
-			    "Denny Hulme",
-			    "Mike Hawthorn",
-			    "Giuseppe Farina",
-			    "Lando Norris",
-			    "Arthur",
-			    "Paulo",
-			    "Leonardo",
-			    "Marcelo",
-			    "Mathias",
-			    "Bino",
-			    "Nícolas"
+		List<List<String>> sDrivers = new ArrayList<>(List.of(
+			    List.of("Lewis Hamilton", "Reino Unido", "Mercedes"),
+			    List.of("Michael Schumacher", "Alemanha", "Ferrari"),
+			    List.of("Ayrton Senna", "Brasil", "McLaren"),
+			    List.of("Max Verstappen", "Países Baixos", "Red Bull"),
+			    List.of("Juan Manuel Fangio", "Argentina", "Alfa Romeo"),
+			    List.of("Alain Prost", "França", "McLaren"),
+			    List.of("Sebastian Vettel", "Alemanha", "Red Bull"),
+			    List.of("Fernando Alonso", "Espanha", "Renault"),
+			    List.of("Niki Lauda", "Áustria", "Ferrari"),
+			    List.of("Nelson Piquet", "Brasil", "Brabham"),
+			    List.of("Jackie Stewart", "Reino Unido", "Tyrrell"),
+			    List.of("Emerson Fittipaldi", "Brasil", "McLaren"),
+			    List.of("Jim Clark", "Reino Unido", "Lotus"),
+			    List.of("Mika Häkkinen", "Finlândia", "McLaren"),
+			    List.of("Nigel Mansell", "Reino Unido", "Williams"),
+			    List.of("Kimi Räikkönen", "Finlândia", "Ferrari"),
+			    List.of("Jenson Button", "Reino Unido", "Brawn GP"),
+			    List.of("Nico Rosberg", "Alemanha", "Mercedes"),
+			    List.of("Jacques Villeneuve", "Canadá", "Williams"),
+			    List.of("Damon Hill", "Reino Unido", "Williams"),
+			    List.of("Graham Hill", "Reino Unido", "BRM"),
+			    List.of("James Hunt", "Reino Unido", "McLaren"),
+			    List.of("Mario Andretti", "Estados Unidos", "Lotus"),
+			    List.of("Jack Brabham", "Austrália", "Brabham"),
+			    List.of("Alberto Ascari", "Itália", "Ferrari"),
+			    List.of("John Surtees", "Reino Unido", "Ferrari"),
+			    List.of("Phil Hill", "Estados Unidos", "Ferrari"),
+			    List.of("Alan Jones", "Austrália", "Williams"),
+			    List.of("Keke Rosberg", "Finlândia", "Williams"),
+			    List.of("Jody Scheckter", "República Sul-Africana", "Ferrari"),
+			    List.of("Jochen Rindt", "Áustria", "Lotus"),
+			    List.of("Denny Hulme", "Nova Zelândia", "Brabham"),
+			    List.of("Mike Hawthorn", "Reino Unido", "Ferrari"),
+			    List.of("Giuseppe Farina", "Itália", "Alfa Romeo"),
+			    List.of("Lando Norris", "Reino Unido", "McLaren"),
+			    List.of("Arthur", "Brasil", "Red Bull"),
+			    List.of("Paulo", "Brasil", "Red Bull"),
+			    List.of("Leonardo", "Brasil", "Red Bull"),
+			    List.of("Marcelo", "Brasil", "Red Bull"),
+			    List.of("Mathias", "Brasil", "Red Bull"),
+			    List.of("Bino", "Brasil", "Red Bull"),
+			    List.of("Nícolas", "Brasil", "Red Bull")
 		));
 		
-		Country brasil = this.countryService.findCountryByBrazilian("Brasil");
-		Team team = this.teamService.findTeamByName("Red Bull");
-		
-		names.forEach((name) -> {
+		sDrivers.forEach((sDriver) -> {
+			
+			String name = sDriver.get(0);
+			Country country = this.countryService.findCountryByBrazilian(sDriver.get(1));
+			Team team = this.teamService.findTeamByName(sDriver.get(2));
+			
 			Driver driver = new Driver();
-			driver.setName(name);
+			driver.setName(sDriver.get(0));
 			driver.setLevel(99);
-			driver.setNationality(brasil);
+			driver.setNationality(country);
 			driver.setTeam(team);
 			
 			drivers.add(driver);

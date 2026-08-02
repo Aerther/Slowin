@@ -24,6 +24,7 @@
                             <th>Piloto</th>
                             <th>Nível / Rank</th>
                             <th>Nacionalidade</th>
+                            <th>Equipe</th>
                             <th class="text-right">Ações</th>
                         </tr>
                     </thead>
@@ -44,6 +45,8 @@
                                     <p th:text="${driver.nationality.brazilian}">Nacionalidade</p>
                                 </div>
                             </td>
+
+                            <td class="cell-highlight" th:text="${driver.team.name}">Equipe</td>
 
                             <td class="text-right">
                                 <a class="btn-table btn-edit">Editar</a>

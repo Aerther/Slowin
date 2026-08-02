@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.f1project.model.dto.TeamDTO;
 import com.f1project.request.TeamRequest;
 import com.f1project.service.TeamService;
+import com.f1project.utils.SortList;
 import com.f1project.utils.mapper.CentralMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Controller
 @RequestMapping("/teams")
@@ -30,7 +30,7 @@ public class TeamController {
 	
 	@GetMapping
 	public String showTeams(Model model) {
-		List<TeamDTO> teams = mapper.teams2DTOList(this.teamService.findAllTeams());
+		List<TeamDTO> teams = SortList.sortTeamsByName(mapper.teams2DTOList(this.teamService.findAllTeams()));
 		
 		model.addAttribute("teams", teams);
 		model.addAttribute("activePage", "teams");

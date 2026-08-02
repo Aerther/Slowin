@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head :: head('Teams')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+    
+    <main class="app-main">
+        <section class="page-title-bar">
+            <div>
+                <div>
+                    <h1>Equipes Cadastradas</h1>
+                    <p class="subtitle">Gerencie o banco de dados de equipes do sistema</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-container">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Equipe</th>
+                            <th>Força Motor</th>
+                            <th>Confiabilidade</th>
+                            <th>Fator Gasto Pneu</th>
+                            <th>Efic. PitStop</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="team : ${teams}">
+                            <td class="cell-highlight" th:text="${team.name}">Equipe</td>
+                            <td class="cell-highlight" th:text="${team.motorForce}">Força do Motor</td>
+                            <td class="cell-highlight" th:text="${team.motorReliability}">Confiabilidade</td>
+                            <td class="cell-highlight" th:text="${team.tyreWearFactor}">Gasto Pneu</td>
+                            <td class="cell-highlight" th:text="${team.pitStopEfficiency}">Efic. PitStop</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
