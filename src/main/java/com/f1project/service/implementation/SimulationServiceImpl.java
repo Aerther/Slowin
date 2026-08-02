@@ -324,7 +324,7 @@ public class SimulationServiceImpl implements SimulationService {
 		}
 		
 		if(lapCondition.isPitting()) {
-			lapTime += this.simulationCalculator.calculatePitStopTime(raceStatus);
+			lapTime += this.simulationCalculator.calculatePitStopTime(raceStatus, team);
 		}
 		
 		if(lapCondition.isSafetyCarOn()) {
@@ -356,7 +356,7 @@ public class SimulationServiceImpl implements SimulationService {
 		}
 		
 		if(lapCondition.isPitting()) {
-			lapTime += this.simulationCalculator.calculatePitStopTime(raceStatus);
+			lapTime += this.simulationCalculator.calculatePitStopTime(raceStatus, team);
 		}
 		
 		if(lapCondition.isSafetyCarOn()) {

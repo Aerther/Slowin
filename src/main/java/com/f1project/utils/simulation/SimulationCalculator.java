@@ -105,6 +105,6 @@ public class SimulationCalculator {
 	}
 	
 	public int randomBetweenInteger(int min, int max) {
-		return min + random.nextInt(max - min + 1);;
+		return min + random.nextInt(max - min + 1);
 	}
 }
