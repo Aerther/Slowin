@@ -1,5 +1,9 @@
 package com.f1project.utils;
 
+import java.util.List;
+
+import com.f1project.utils.enums.Mistake;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

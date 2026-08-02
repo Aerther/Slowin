@@ -1,5 +1,9 @@
 package com.f1project.utils.enums;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,4 +17,8 @@ public enum Mistake {
 	private double timeLostDownBound;
 	private double timeLostUpperBound;
 	private double chance;
+	
+	public static List<Mistake> getMistakesValues() {
+		return Arrays.stream(Mistake.values()).collect(Collectors.toList());
+	}
 }
