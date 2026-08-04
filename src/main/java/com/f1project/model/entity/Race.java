@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.f1project.utils.enums.RaceStatus;
+import com.f1project.model.enums.RaceStatus;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;

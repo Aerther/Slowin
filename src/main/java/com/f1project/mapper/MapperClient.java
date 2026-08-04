@@ -1,4 +1,4 @@
-package com.f1project.utils.mapper;
+package com.f1project.mapper;
 
 import java.util.List;
 import java.util.Map;

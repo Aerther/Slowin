@@ -1,6 +1,6 @@
 package com.f1project.model.entity;
 
-import com.f1project.utils.enums.WeatherCondition;
+import com.f1project.model.enums.WeatherCondition;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

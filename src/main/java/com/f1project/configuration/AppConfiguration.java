@@ -3,7 +3,7 @@ package com.f1project.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.f1project.utils.mapper.CentralMapper;
+import com.f1project.mapper.CentralMapper;
 
 public class AppConfiguration {
 	

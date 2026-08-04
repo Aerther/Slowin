@@ -2,8 +2,8 @@ package com.f1project.model.dto;
 
 import com.f1project.model.entity.Driver;
 import com.f1project.model.entity.Race;
-import com.f1project.utils.enums.DriverStatus;
-import com.f1project.utils.enums.Tyre;
+import com.f1project.model.enums.DriverStatus;
+import com.f1project.model.enums.Tyre;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

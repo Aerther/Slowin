@@ -6,7 +6,7 @@ import java.util.List;
 import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Track;
 import com.f1project.model.entity.Weather;
-import com.f1project.utils.enums.RaceStatus;
+import com.f1project.model.enums.RaceStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

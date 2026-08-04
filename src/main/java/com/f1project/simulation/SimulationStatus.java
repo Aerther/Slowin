@@ -1,13 +1,17 @@
-package com.f1project.utils.simulation;
+package com.f1project.simulation;
 
 import java.util.Random;
 
-import com.f1project.model.entity.Team;
-import com.f1project.utils.enums.Mistake;
-import com.f1project.utils.enums.RaceStatus;
-import com.f1project.utils.enums.Tyre;
-import com.f1project.utils.enums.WeatherCondition;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.f1project.model.entity.Team;
+import com.f1project.model.enums.Mistake;
+import com.f1project.model.enums.RaceStatus;
+import com.f1project.model.enums.Tyre;
+import com.f1project.model.enums.WeatherCondition;
+
+@Service
 public class SimulationStatus {
 	private Random random = new Random();
 	

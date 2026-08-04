@@ -1,18 +1,36 @@
-package com.f1project.utils.simulation;
+package com.f1project.simulation;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import com.f1project.model.entity.Team;
-import com.f1project.utils.LapCondition;
-import com.f1project.utils.enums.Mistake;
-import com.f1project.utils.enums.RaceStatus;
-import com.f1project.utils.enums.Tyre;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.f1project.model.entity.Team;
+import com.f1project.model.enums.Mistake;
+import com.f1project.model.enums.RaceStatus;
+import com.f1project.model.enums.Tyre;
+import com.f1project.utils.LapCondition;
+
+@Service
 public class SimulationCalculator {
 	private Random random = new Random();
+	
+	public int getDurationOfSafetyCarInLaps(RaceStatus raceStatus) {
+		if(raceStatus == RaceStatus.VSC) return this.randomBetweenInteger(1, 3);
+		
+		if(raceStatus == RaceStatus.SAFETYCAR) return this.randomBetweenInteger(3, 6);
+		
+		return 0;
+	}
+	
+	public double calculateTyreTypeTime(Tyre tyre, LapCondition lapCondition) {
+		if(lapCondition.isTyreWrong() || lapCondition.isTyreFlat()) return 0;
+		
+		return this.randomBetween(1.7, 2.3) * (1 - tyre.getEfficiency());
+	}
 	
 	public int useTyre(RaceStatus raceStatus, Tyre tyre, Team team) {
 	    int baseDegradation = this.randomBetweenInteger(tyre.getDegradationLostDownBound(), tyre.getDegradationLostUpperBound());

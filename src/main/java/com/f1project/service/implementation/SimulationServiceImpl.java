@@ -7,25 +7,25 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.f1project.client.ApiClient;
+import com.f1project.mapper.CentralMapper;
 import com.f1project.model.entity.Driver;
 import com.f1project.model.entity.Race;
 import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Team;
 import com.f1project.model.entity.Track;
+import com.f1project.model.enums.DriverStatus;
+import com.f1project.model.enums.RaceStatus;
+import com.f1project.model.enums.Tyre;
+import com.f1project.model.enums.WeatherCondition;
 import com.f1project.repository.RaceRepository;
 import com.f1project.service.DriverService;
 import com.f1project.service.RaceService;
 import com.f1project.service.SimulationService;
 import com.f1project.service.TrackService;
+import com.f1project.simulation.SimulationCalculator;
+import com.f1project.simulation.SimulationStatus;
 import com.f1project.utils.FormatUtils;
 import com.f1project.utils.LapCondition;
-import com.f1project.utils.enums.DriverStatus;
-import com.f1project.utils.enums.RaceStatus;
-import com.f1project.utils.enums.Tyre;
-import com.f1project.utils.enums.WeatherCondition;
-import com.f1project.utils.mapper.CentralMapper;
-import com.f1project.utils.simulation.SimulationCalculator;
-import com.f1project.utils.simulation.SimulationStatus;
 
 import lombok.AllArgsConstructor;
 
@@ -150,7 +150,7 @@ public class SimulationServiceImpl implements SimulationService {
 	        if (safetyCarTriggeredThisLap) {
 	        	raceStatus = RaceStatus.getRandomSafetyStatus(raceStatus);
 	            
-	            lapsSafetyCarDuration = 11;
+	            lapsSafetyCarDuration = this.simulationCalculator.getDurationOfSafetyCarInLaps(raceStatus);
 	        }
 	        
 	        this.updateDriversPositions(raceResults);
@@ -159,7 +159,6 @@ public class SimulationServiceImpl implements SimulationService {
 		List<RaceResult> activeResults = this.orderRaceResultsByRaceTime(raceResults);
 		
 		double firstTotalTime = 0;
-		int lastPosition = activeResults.size();
 		
 		if(!activeResults.isEmpty()) {
 			firstTotalTime = activeResults.get(0).getRaceTime();
@@ -187,11 +186,11 @@ public class SimulationServiceImpl implements SimulationService {
 			int calc = (int) (differenceToFirst / trackTime);
 			
 			if(calc == 1) {
-				raceResult.setDifferenceToFirstTime("+" + calc + "Lap");
+				raceResult.setDifferenceToFirstTime("+" + calc + " Lap");
 			}
 			
 			if(calc > 1) {
-				raceResult.setDifferenceToFirstTime("+" + calc + "Laps");
+				raceResult.setDifferenceToFirstTime("+" + calc + " Laps");
 			}
 		}
 		
@@ -339,6 +338,7 @@ public class SimulationServiceImpl implements SimulationService {
 		
 		int level = driver.getLevel();
 		int tyreUsage = raceResult.getTyreUsage();
+		Tyre tyre = raceResult.getTyre();
 		
 		double lapTime = trackFastestTime;
 		
@@ -346,6 +346,7 @@ public class SimulationServiceImpl implements SimulationService {
 		lapTime += this.simulationCalculator.calculateDriverAndEngineVariation(raceStatus, level, team);
 		lapTime += this.simulationCalculator.calculateDriverMistake(raceStatus, lapCondition, level);
 		lapTime += this.simulationCalculator.calculateTyreUsageTimeLoss(tyreUsage);
+		lapTime += this.simulationCalculator.calculateTyreTypeTime(tyre, lapCondition);
 		
 		if(lapCondition.isTyreWrong()) {
 			lapTime += this.simulationCalculator.calculateTyreWrongTime(raceStatus);

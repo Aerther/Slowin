@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 
 import com.f1project.client.ApiClient;
 import com.f1project.exception.ResourceNotFoundException;
+import com.f1project.mapper.CentralMapper;
 import com.f1project.model.dto.RaceDTO;
 import com.f1project.model.entity.Driver;
 import com.f1project.model.entity.Race;
 import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Track;
 import com.f1project.model.entity.Weather;
+import com.f1project.model.enums.DriverStatus;
+import com.f1project.model.enums.RaceStatus;
+import com.f1project.model.enums.Tyre;
 import com.f1project.repository.CountryRepository;
 import com.f1project.repository.DriverRepository;
 import com.f1project.repository.RaceRepository;
@@ -24,10 +28,6 @@ import com.f1project.request.RaceRequest;
 import com.f1project.service.DriverService;
 import com.f1project.service.RaceService;
 import com.f1project.service.TrackService;
-import com.f1project.utils.enums.DriverStatus;
-import com.f1project.utils.enums.RaceStatus;
-import com.f1project.utils.enums.Tyre;
-import com.f1project.utils.mapper.CentralMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

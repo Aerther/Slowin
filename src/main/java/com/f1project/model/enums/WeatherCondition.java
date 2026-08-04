@@ -1,4 +1,4 @@
-package com.f1project.utils.enums;
+package com.f1project.model.enums;
 
 import java.util.List;
 import java.util.ArrayList;
