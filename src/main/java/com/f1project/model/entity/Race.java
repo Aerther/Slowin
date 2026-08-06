@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.f1project.model.enums.RaceStatus;
+import com.f1project.utils.RaceRules;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
@@ -40,6 +41,9 @@ public class Race {
 	
 	private LocalDateTime dateCreated;
 	private LocalDateTime dateStarted;
+	
+	@Embedded
+	private RaceRules raceRules;
 	
 	private RaceStatus raceStatus = RaceStatus.CREATED;
 	private int lapsSafetyCarDuration = 0;

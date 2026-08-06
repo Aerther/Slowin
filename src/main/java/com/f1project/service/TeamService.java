@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.f1project.model.entity.Country;
 import com.f1project.model.entity.Team;
-import com.f1project.request.CountryRequest;
-import com.f1project.request.TeamRequest;
+import com.f1project.model.request.CountryRequest;
+import com.f1project.model.request.TeamRequest;
 
 public interface TeamService {
 	public List<Team> findAllTeams();

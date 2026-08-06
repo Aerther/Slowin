@@ -1,4 +1,4 @@
-package com.f1project.request;
+package com.f1project.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

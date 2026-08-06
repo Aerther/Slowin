@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.f1project.model.dto.RaceDTO;
 import com.f1project.model.entity.Race;
-import com.f1project.request.RaceRequest;
+import com.f1project.model.request.RaceRequest;
 
 public interface RaceService {
 	List<Race> findAllRaces();

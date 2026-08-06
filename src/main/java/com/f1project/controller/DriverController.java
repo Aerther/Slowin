@@ -16,7 +16,7 @@ import com.f1project.mapper.CentralMapper;
 import com.f1project.model.dto.CountryDTO;
 import com.f1project.model.dto.DriverDTO;
 import com.f1project.model.dto.TeamDTO;
-import com.f1project.request.DriverRequest;
+import com.f1project.model.request.DriverRequest;
 import com.f1project.service.CountryService;
 import com.f1project.service.DriverService;
 import com.f1project.service.TeamService;

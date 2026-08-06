@@ -33,4 +33,28 @@ public enum WeatherCondition {
     public String getWeatherUrl() {
     	return "/images/weather/" + imageName;
     }
+    
+    public List<WeatherCondition> getNextWeatherPossibleConditions() {
+    	return switch (this) {
+	        case SUNNY -> List.of(OVERCAST, CLOUDY);
+	        case OVERCAST -> List.of(SUNNY, CLOUDY);
+	        case CLOUDY -> List.of(OVERCAST, DIZZLE);
+	        case DIZZLE -> List.of(CLOUDY, RAINY);
+	        case RAINY -> List.of(DIZZLE, STORMY);
+	        case STORMY -> List.of(RAINY, SNOWY);
+	        case SNOWY -> List.of(STORMY, RAINY);
+	    };
+    }
+    
+    public int getProbabilityToChangeToFirst() {
+    	return switch (this) {
+	        case SUNNY -> 70;
+	        case OVERCAST -> 50;
+	        case CLOUDY -> 60;
+	        case DIZZLE -> 40;
+	        case RAINY -> 70;
+	        case STORMY -> 80;
+	        case SNOWY -> 90;
+	    };
+    }
 }

@@ -19,15 +19,16 @@ import com.f1project.model.entity.Weather;
 import com.f1project.model.enums.DriverStatus;
 import com.f1project.model.enums.RaceStatus;
 import com.f1project.model.enums.Tyre;
+import com.f1project.model.request.RaceRequest;
 import com.f1project.repository.CountryRepository;
 import com.f1project.repository.DriverRepository;
 import com.f1project.repository.RaceRepository;
 import com.f1project.repository.RaceResultRepository;
 import com.f1project.repository.TrackRepository;
-import com.f1project.request.RaceRequest;
 import com.f1project.service.DriverService;
 import com.f1project.service.RaceService;
 import com.f1project.service.TrackService;
+import com.f1project.utils.RaceRules;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -61,12 +62,16 @@ public class RaceServiceImpl implements RaceService {
 		Weather weather = mapper.DTO2weather(client.getWeatherCity(track.getLatitude(), track.getLongitude()));
 		weather.setWeatherCondition();
 		
+		RaceRules raceRules = mapper.request2RaceRules(raceRequest);
+		
 		Race race = mapper.request2Race(raceRequest);
+		race.setId(null);
 		race.setTrack(track);
 		race.setWeather(weather);
 		race.setDateCreated(LocalDateTime.now());
 		race.setLapsDone(0);
 		race.setRaceStatus(RaceStatus.CREATED);
+		race.setRaceRules(raceRules);
 		
 		List<RaceResult> raceResults = new ArrayList<>();
 		

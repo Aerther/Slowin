@@ -12,6 +12,7 @@ import com.f1project.model.entity.Team;
 import com.f1project.model.enums.Mistake;
 import com.f1project.model.enums.RaceStatus;
 import com.f1project.model.enums.Tyre;
+import com.f1project.model.enums.WeatherCondition;
 import com.f1project.utils.LapCondition;
 
 @Service

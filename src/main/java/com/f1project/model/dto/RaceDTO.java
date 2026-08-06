@@ -7,6 +7,7 @@ import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Track;
 import com.f1project.model.entity.Weather;
 import com.f1project.model.enums.RaceStatus;
+import com.f1project.utils.RaceRules;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,8 @@ public class RaceDTO {
 	
 	private LocalDateTime dateCreated;
 	private LocalDateTime dateStarted;
+	
+	private RaceRules raceRules;
 	
 	private RaceStatus raceStatus;
 	private int lapsSafetyCarDuration;

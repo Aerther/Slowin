@@ -1,4 +1,4 @@
-package com.f1project.request;
+package com.f1project.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DriverRequest {
+public class CountryRequest {
 	private Long id;
+	
 	private String name;
-	private int level;
-	private Long countryId;
-	private Long teamId;
+	
+	private String capital;
+	
+	private String code;
+	
+	private String flagUrl;
+	
+	private String brazilian;
 }

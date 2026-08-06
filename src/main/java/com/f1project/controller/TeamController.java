@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.f1project.mapper.CentralMapper;
 import com.f1project.model.dto.TeamDTO;
-import com.f1project.request.TeamRequest;
+import com.f1project.model.request.TeamRequest;
 import com.f1project.service.TeamService;
 import com.f1project.utils.SortList;
 

@@ -13,6 +13,7 @@ import com.f1project.model.entity.Race;
 import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Team;
 import com.f1project.model.entity.Track;
+import com.f1project.model.entity.Weather;
 import com.f1project.model.enums.DriverStatus;
 import com.f1project.model.enums.RaceStatus;
 import com.f1project.model.enums.Tyre;
@@ -26,6 +27,7 @@ import com.f1project.simulation.SimulationCalculator;
 import com.f1project.simulation.SimulationStatus;
 import com.f1project.utils.FormatUtils;
 import com.f1project.utils.LapCondition;
+import com.f1project.utils.RaceRules;
 
 import lombok.AllArgsConstructor;
 
@@ -40,6 +42,9 @@ public class SimulationServiceImpl implements SimulationService {
 	@Override
 	public Race simulateRace(Long raceId, int laps) {
 		Race race = this.raceService.findRaceById(raceId);
+		Weather weather = race.getWeather();
+		RaceRules raceRules = race.getRaceRules();
+		
 		double raceFastestLap = (race.getFastestLap() > 0) ? race.getFastestLap() : Double.MAX_VALUE;
 		RaceStatus raceStatus = race.getRaceStatus();
 		int lapsSafetyCarDuration = race.getLapsSafetyCarDuration();
@@ -57,7 +62,7 @@ public class SimulationServiceImpl implements SimulationService {
 		int lapsDone = race.getLapsDone();
 		race.setLapsDone(laps + lapsDone);
 		
-		WeatherCondition weatherCondition = race.getWeather().getWeatherCondition();
+		WeatherCondition weatherCondition = weather.getWeatherCondition();
 		
 		Track track = race.getTrack();
 		double trackTime = track.getFastestTime();
@@ -90,10 +95,10 @@ public class SimulationServiceImpl implements SimulationService {
 	            
 	            double lapTime = 0;
 
-	            boolean isTyreFlat = this.simulationStatus.isTyreFlat(tyreUsage);
+	            boolean isTyreFlat = this.simulationStatus.isTyreFlat(raceRules, tyreUsage);
 	            boolean isTyreWrong = this.simulationStatus.isTyreWrong(weatherCondition, tyre);
-	            boolean isPitting = this.simulationStatus.isDriverPitting(tyreUsage, isTyreWrong, isTyreFlat);
-	            boolean isRetiring = this.simulationStatus.isDriverRetiring(isTyreWrong, team);
+	            boolean isPitting = this.simulationStatus.isDriverPitting(raceRules, tyreUsage, isTyreWrong, isTyreFlat);
+	            boolean isRetiring = this.simulationStatus.isDriverRetiring(raceRules, isTyreWrong, team);
 	            boolean isSafetyCarOn = this.simulationStatus.isSafetyCarOn(raceStatus);
 
 	            LapCondition lapCondition = new LapCondition(
@@ -117,8 +122,11 @@ public class SimulationServiceImpl implements SimulationService {
 	            if (lapTime < raceFastestLap) {
 	                raceFastestLap = lapTime;
 	            }
-
-	            tyreUsage = Math.max(0, tyreUsage - this.simulationCalculator.useTyre(raceStatus, tyre, team));
+	            
+	            if(raceRules.isDriverTyreWearEnabled()) {
+	            	tyreUsage = Math.max(0, tyreUsage - this.simulationCalculator.useTyre(raceStatus, tyre, team));
+	            }
+	            
 	            raceResult.setStint(raceResult.getStint() + 1);
 
 	            if (lapCondition.isPitting()) {
@@ -131,9 +139,9 @@ public class SimulationServiceImpl implements SimulationService {
 
 	            if (lapCondition.isRetiring()) {
 	                raceResult.setDriverStatus(DriverStatus.RETIRED);
-	                raceResult.setLapRetired(currentLap + lapsDone);
+	                raceResult.setLapRetired(currentLap + lapsDone + 1);
 	                
-	                if (this.simulationStatus.isSafetyCarComing()) {
+	                if (this.simulationStatus.isSafetyCarComing(raceRules)) {
 	                    safetyCarTriggeredThisLap = true;
 	                }
 	            }
@@ -151,6 +159,18 @@ public class SimulationServiceImpl implements SimulationService {
 	        	raceStatus = RaceStatus.getRandomSafetyStatus(raceStatus);
 	            
 	            lapsSafetyCarDuration = this.simulationCalculator.getDurationOfSafetyCarInLaps(raceStatus);
+	        }
+	        
+	        if(this.simulationStatus.isChangingWeather(raceRules, weatherCondition, weather)) {
+	        	weatherCondition = this.simulationStatus.getNextWeather(weatherCondition, weather);
+	        }
+	        
+	        if(this.simulationStatus.isFanOnTrackAndGotObliterated(raceRules)) {
+	        	raceStatus = RaceStatus.FINISHED;
+	        	
+	        	race.setLapsDone(lapsDone + currentLap + 1);
+	        	
+	        	break;
 	        }
 	        
 	        this.updateDriversPositions(raceResults);
@@ -208,11 +228,14 @@ public class SimulationServiceImpl implements SimulationService {
 		race.getResults().clear();
         race.getResults().addAll(activeResults);
         race.getResults().addAll(retiredResults);
+        
+        weather.setWeatherCondition(weatherCondition);
 	
 		race.setResults(raceResults);
 		race.setRaceStatus(raceStatus);
 		race.setFastestLap(raceFastestLap);
         race.setLapsSafetyCarDuration(lapsSafetyCarDuration);
+        race.setWeather(weather);
 		
 		if(race.getLapsQuantity() <= race.getLapsDone()) {
 			race.setRaceStatus(RaceStatus.FINISHED);

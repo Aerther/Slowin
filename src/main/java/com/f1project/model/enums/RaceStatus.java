@@ -12,6 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RaceStatus {
 	FINISHED("FINISHED", false, 1),
+	REDFLAG("REDFLAG", false, 0),
 	ONGOING("ONGOING", false, 1),
 	CREATED("CREATED", false, 1),
 	SAFETYCAR("SAFETYCAR", true, 0.5),

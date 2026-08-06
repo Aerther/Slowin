@@ -21,11 +21,12 @@ import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Team;
 import com.f1project.model.entity.Track;
 import com.f1project.model.entity.Weather;
-import com.f1project.request.CountryRequest;
-import com.f1project.request.DriverRequest;
-import com.f1project.request.RaceRequest;
-import com.f1project.request.TeamRequest;
-import com.f1project.request.TrackRequest;
+import com.f1project.model.request.CountryRequest;
+import com.f1project.model.request.DriverRequest;
+import com.f1project.model.request.RaceRequest;
+import com.f1project.model.request.TeamRequest;
+import com.f1project.model.request.TrackRequest;
+import com.f1project.utils.RaceRules;
 
 @Mapper(componentModel = "spring")
 public interface CentralMapper {
@@ -55,6 +56,8 @@ public interface CentralMapper {
     Race DTO2race(RaceDTO raceDTO);
 	
 	Race request2Race(RaceRequest raceRequest);
+	
+	RaceRules request2RaceRules(RaceRequest raceRequest);
 	
 	@Mapping(target = "race", ignore = true)
 	RaceResultDTO raceResult2DTO(RaceResult raceResult);

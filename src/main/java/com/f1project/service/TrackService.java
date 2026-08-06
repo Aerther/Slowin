@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.f1project.model.dto.TrackDTO;
 import com.f1project.model.entity.Track;
-import com.f1project.request.TrackRequest;
+import com.f1project.model.request.TrackRequest;
 
 public interface TrackService {
 	List<Track> findAllTracks();

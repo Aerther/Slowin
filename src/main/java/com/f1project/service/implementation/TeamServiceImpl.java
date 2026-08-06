@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.f1project.exception.ResourceNotFoundException;
 import com.f1project.mapper.CentralMapper;
 import com.f1project.model.entity.Team;
+import com.f1project.model.request.TeamRequest;
 import com.f1project.repository.TeamRepository;
-import com.f1project.request.TeamRequest;
 import com.f1project.service.TeamService;
 
 import lombok.AllArgsConstructor;
