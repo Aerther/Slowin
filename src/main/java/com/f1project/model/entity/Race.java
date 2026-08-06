@@ -45,6 +45,8 @@ public class Race {
 	@Embedded
 	private RaceRules raceRules;
 	
+	private Driver driverWhoHitFan;
+	
 	private RaceStatus raceStatus = RaceStatus.CREATED;
 	private int lapsSafetyCarDuration = 0;
 	

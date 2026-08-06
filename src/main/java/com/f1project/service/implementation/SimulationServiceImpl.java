@@ -166,8 +166,9 @@ public class SimulationServiceImpl implements SimulationService {
 	        }
 	        
 	        if(this.simulationStatus.isFanOnTrackAndGotObliterated(raceRules)) {
-	        	raceStatus = RaceStatus.FINISHED;
+	        	raceStatus = RaceStatus.FANINVASION;
 	        	
+	        	race.setDriverWhoHitFan(this.simulationStatus.getRandomDriver(raceResults));
 	        	race.setLapsDone(lapsDone + currentLap + 1);
 	        	
 	        	break;

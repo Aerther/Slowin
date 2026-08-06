@@ -6,6 +6,8 @@ import java.util.Random;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.f1project.model.entity.Driver;
+import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Team;
 import com.f1project.model.entity.Weather;
 import com.f1project.model.enums.Mistake;
@@ -44,6 +46,12 @@ public class SimulationStatus {
 		if(possibleConditions.size() == 1) return possibleConditions.get(0);
 		
 		return probability > rNum ? possibleConditions.get(0) : possibleConditions.get(1);
+	}
+	
+	public Driver getRandomDriver(List<RaceResult> raceResults) {
+		int rNum = random.nextInt(raceResults.size());
+		
+		return raceResults.get(rNum).getDriver();
 	}
 	
 	public boolean isFanOnTrackAndGotObliterated(RaceRules raceRules) {

@@ -16,7 +16,8 @@ public enum RaceStatus {
 	ONGOING("ONGOING", false, 1),
 	CREATED("CREATED", false, 1),
 	SAFETYCAR("SAFETYCAR", true, 0.5),
-	VSC("VSC", true, 0.5);
+	VSC("VSC", true, 0.5),
+	FANINVASION("FANINVASION", false, 0);
 	
 	private final String description;
 	private final boolean isSafety;

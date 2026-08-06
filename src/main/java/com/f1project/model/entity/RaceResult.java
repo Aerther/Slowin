@@ -29,7 +29,7 @@ public class RaceResult {
 	
 
 	private double raceTime = 0;
-	private double fastestLap = 100000;
+	private double fastestLap = 0;
 	private double currentLap;
 	private double difference = 0;
 	private double differenceToFirst = 0;

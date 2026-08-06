@@ -3,6 +3,7 @@ package com.f1project.model.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.f1project.model.entity.Driver;
 import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Track;
 import com.f1project.model.entity.Weather;
@@ -25,6 +26,7 @@ public class RaceDTO {
 	private LocalDateTime dateStarted;
 	
 	private RaceRules raceRules;
+	private DriverDTO driverWhoHitFan;
 	
 	private RaceStatus raceStatus;
 	private int lapsSafetyCarDuration;
