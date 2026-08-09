@@ -31,19 +31,17 @@ public class RaceEvent {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private int lap;
+	@ManyToOne
+	@JoinColumn(name = "race_id")
+	private Race race;
 	
 	private EventType eventType;
 	
 	@ManyToOne
-	@JoinColumn(name = "race_id")
-	private Race race;
-
-	@ManyToOne
 	@JoinColumn(name = "race_result_id")
 	private RaceResult raceResult;
 	
-	private String message;
+	private int lap;
 	
-	private LocalDateTime createdAt;
+	private String message;
 }

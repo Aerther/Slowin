@@ -10,10 +10,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Mistake {
-	SMALL(0.4, 2, 8),
-	MEDIUM(2, 5, 4),
-	BIG(5, 10, 1);
+	SMALL("Pequeno", 0.4, 2, 8),
+	MEDIUM("Médio", 2, 5, 4),
+	BIG("Grande", 5, 10, 1);
 	
+	private String descriptionBrazilian;
 	private double timeLostDownBound;
 	private double timeLostUpperBound;
 	private double chance;

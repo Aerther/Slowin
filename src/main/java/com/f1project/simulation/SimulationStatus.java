@@ -1,5 +1,6 @@
 package com.f1project.simulation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,6 +15,7 @@ import com.f1project.model.enums.Mistake;
 import com.f1project.model.enums.RaceStatus;
 import com.f1project.model.enums.Tyre;
 import com.f1project.model.enums.WeatherCondition;
+import com.f1project.utils.LapCondition;
 import com.f1project.utils.RaceRules;
 
 @Service
@@ -22,6 +24,30 @@ public class SimulationStatus {
 	
 	private double getRandomNum() {
 		return random.nextDouble() * 100;
+	}
+	
+	public List<Mistake> getDriverMistakesDone(RaceStatus raceStatus, boolean isTyreWrong, int driverLevel) {
+		List<Mistake> mistakesDone = new ArrayList<>();
+		
+		double multiplier = 1 - (driverLevel) / 200.0;
+		
+		if(raceStatus.isSafety()) {
+			multiplier = multiplier * 0.05;
+		}
+		
+		if(isTyreWrong) {
+			multiplier = multiplier * 2;
+		}
+		
+		List<Mistake> mistakes = Mistake.getMistakesValues();
+		
+		for(Mistake mistake : mistakes) {
+			if(!SimulationStatus.didDriverMadeMistake(mistake, multiplier)) continue;
+			
+			mistakesDone.add(mistake);
+		}
+		
+		return mistakesDone;
 	}
 	
 	public boolean isChangingWeather(RaceRules raceRules, WeatherCondition currentCondition, Weather weather) {
@@ -63,7 +89,7 @@ public class SimulationStatus {
 	public boolean isDriverRetiring(RaceRules raceRules, boolean isTyreWrong, Team team) {
 		if(!raceRules.isDriverRetirementEnabled()) return false;
 		
-		double multiplier = isTyreWrong ? 2.0 : 1.0;
+		double multiplier = isTyreWrong ? 1.5 : 1.0;
 	    
 	    double baseRetirementChance = 0.07;
 	    

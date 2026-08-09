@@ -42,7 +42,7 @@ public class ReadFile {
 					name,
 					city,
 					fastestTime,
-					FormatUtils.formatLapTime(fastestTime),
+					StringFormatter.formatLapTime(fastestTime),
 					length,
 					latitude,
 					longitude,

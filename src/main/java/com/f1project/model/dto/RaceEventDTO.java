@@ -27,6 +27,4 @@ public class RaceEventDTO {
 	private RaceResult raceResult;
 	
 	private String message;
-	
-	private LocalDateTime createdAt;
 }

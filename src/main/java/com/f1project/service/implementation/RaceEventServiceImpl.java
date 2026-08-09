@@ -1,5 +1,6 @@
 package com.f1project.service.implementation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -30,19 +31,27 @@ public class RaceEventServiceImpl implements RaceEventService {
 
 	@Override
 	public RaceEvent saveRaceEvent(Race race, EventType eventType, RaceResult raceResult, int lap, String message) {
-		// TODO Auto-generated method stub
-		return null;
+		RaceEvent raceEvent = new RaceEvent(null, race, eventType, raceResult, lap, message);
+		
+		RaceEvent savedRaceEvent = this.raceEventRepo.save(raceEvent);
+		
+		return savedRaceEvent;
+	}
+	
+	@Override
+	public List<RaceEvent> saveAllRaceEvents(List<RaceEvent> raceEvents) {
+		List<RaceEvent> savedRaceEvents = this.raceEventRepo.saveAll(raceEvents);
+		
+		return savedRaceEvents;
 	}
 
 	@Override
 	public void deleteRaceEvent(Long id) {
 		
-		
 	}
 
 	@Override
 	public void deleteAllRaceEvents() {
-		// TODO Auto-generated method stub
 		
 	}
 

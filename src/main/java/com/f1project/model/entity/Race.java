@@ -45,6 +45,8 @@ public class Race {
 	@Embedded
 	private RaceRules raceRules;
 	
+	@ManyToOne
+	@JoinColumn(name = "driver_id")
 	private Driver driverWhoHitFan;
 	
 	private RaceStatus raceStatus = RaceStatus.CREATED;

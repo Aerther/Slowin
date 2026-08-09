@@ -1,6 +1,5 @@
 package com.f1project.simulation;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -71,23 +70,10 @@ public class SimulationCalculator {
 		return ((-1) * (tyreUsage) * ( 1.0/25 ) + 4);
 	}
 	
-	public double calculateDriverMistake(RaceStatus raceStatus, LapCondition lapCondition, int driverLevel) {
+	public double calculateDriverMistakeTimeLoss(LapCondition lapCondition) {
 		double extraLapTime = 0;
-		double multiplier = 1 - (driverLevel) / 200.0;
 		
-		if(raceStatus.isSafety()) {
-			multiplier = multiplier * 0.05;
-		}
-		
-		if(lapCondition.isTyreWrong()) {
-			multiplier = multiplier * 2;
-		}
-		
-		List<Mistake> mistakes = Mistake.getMistakesValues();
-		
-		for(Mistake mistake : mistakes) {
-			if(!SimulationStatus.didDriverMadeMistake(mistake, multiplier)) continue;
-			
+		for(Mistake mistake : lapCondition.getMistakesDone()) {
 			extraLapTime += this.randomBetween(mistake.getTimeLostDownBound(), mistake.getTimeLostUpperBound());
 		}
 		

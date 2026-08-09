@@ -13,6 +13,8 @@ public interface RaceEventService {
 	
 	public RaceEvent saveRaceEvent(Race race, EventType eventType, RaceResult raceResult, int lap, String message);
 	
+	List<RaceEvent> saveAllRaceEvents(List<RaceEvent> raceEvents);
+	
 	void deleteRaceEvent(Long id);
 	
 	void deleteAllRaceEvents();

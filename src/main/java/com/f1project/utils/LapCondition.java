@@ -15,4 +15,5 @@ public class LapCondition {
 	private boolean isTyreFlat;
 	private boolean isRetiring;
 	private boolean isSafetyCarOn;
+	private List<Mistake> mistakesDone;
 }
