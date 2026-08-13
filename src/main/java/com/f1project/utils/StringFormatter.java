@@ -32,6 +32,15 @@ public class StringFormatter {
 	    return String.format(Locale.US, "%02d.%03d", seconds, millis);
 	}
 	
+	public static String formatFastestLap(RaceResult raceResult, LapTimeBreakDown breakdown) {
+		String format = "Piloto %s fez a volta mais rápida (%s)";
+		
+		String driverName = raceResult.getDriver().getName();
+		String fastestLap = raceResult.getFastestLapTime();
+		
+		return String.format(format, driverName, fastestLap);
+	}
+	
 	public static String formatPitStop(RaceResult raceResult, LapTimeBreakDown breakdown) {
 		String format = "Piloto %s parou nos boxes (parada de %.1fs) e trocou para o pneu %s";
 		

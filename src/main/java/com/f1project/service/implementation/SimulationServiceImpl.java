@@ -79,6 +79,8 @@ public class SimulationServiceImpl implements SimulationService {
 		String message = null;
 		List<RaceEvent> raceEventsToSave = new ArrayList<>();
 		
+		RaceEvent fastestLapEvent = null;
+		
 		for (int currentLap = 0; currentLap < laps; currentLap++) {
 			
 			int currentRealLap = currentLap + lapsDone + 1;
@@ -138,6 +140,9 @@ public class SimulationServiceImpl implements SimulationService {
 	            
 	            if (lapTime < raceFastestLap) {
 	                raceFastestLap = lapTime;
+	                
+	                message = StringFormatter.formatFastestLap(raceResult, breakdown);
+	                fastestLapEvent = new RaceEvent(null, race, EventType.FASTEST_LAP, raceResult, currentRealLap, message);
 	            }
 	            
 	            if(raceRules.isDriverTyreWearEnabled()) {
@@ -179,6 +184,10 @@ public class SimulationServiceImpl implements SimulationService {
 	            raceResult.setTyreUsage(tyreUsage);
 	            raceResult.setCurrentLapTime(StringFormatter.formatLapTime(lapTime));
 	            raceResult.setTotalRaceTime(StringFormatter.formatLapTime(raceResult.getRaceTime()));
+	        }
+	        
+	        if(fastestLapEvent != null) {
+                raceEventsToSave.add(fastestLapEvent);
 	        }
 	        
 	        if(raceStatus == RaceStatus.SAFETYCAR) {

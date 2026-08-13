@@ -2,6 +2,7 @@ package com.f1project.controller;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +60,7 @@ public class TrackController {
 		return "redirect:/tracks";
 	}
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/create/txt")
 	public String createTracksBasedTxt() {
 		this.trackService.saveTracksFromTxt();
@@ -68,17 +70,19 @@ public class TrackController {
 	
 	// UPDATE OPERATION
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/update/{trackId}")
 	public String showTrackEditForm(@PathVariable("trackId") Long trackId, Model model) {
-		List<CountryDTO> countriesDTO = mapper.countries2DTOList(this.countryService.findAllCountries());
-		TrackDTO trackDTO = mapper.track2DTO(this.trackService.findTrackById(trackId));
+		List<CountryDTO> countries = mapper.countries2DTOList(this.countryService.findAllCountries());
+		TrackDTO track = mapper.track2DTO(this.trackService.findTrackById(trackId));
 		
-		model.addAttribute("track", trackDTO);
-		model.addAttribute("countries", countriesDTO);
+		model.addAttribute("track", track);
+		model.addAttribute("countries", countries);
 		
 		return "tracks/update";
 	}
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@PostMapping("/update")
 	public String updateTrack(TrackRequest trackRequest) {
 		this.trackService.updateTrack(trackRequest);
@@ -88,6 +92,7 @@ public class TrackController {
 	
 	// DELETE OPERATION
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/delete")
 	public String deleteTrack(@RequestParam("trackId") Long trackId) {
 		this.trackService.deleteTrack(trackId);
@@ -95,6 +100,7 @@ public class TrackController {
 		return "redirect:/tracks";
 	}
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/delete/all")
 	public String deleteAllTracks() {
 		this.trackService.deleteAllTracks();

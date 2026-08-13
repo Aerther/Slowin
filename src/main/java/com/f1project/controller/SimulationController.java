@@ -1,5 +1,7 @@
 package com.f1project.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.f1project.mapper.CentralMapper;
 import com.f1project.model.dto.RaceDTO;
+import com.f1project.model.dto.RaceEventDTO;
 import com.f1project.service.CountryService;
+import com.f1project.service.RaceEventService;
 import com.f1project.service.RaceService;
 import com.f1project.service.SimulationService;
 
@@ -23,6 +27,7 @@ public class SimulationController {
 	
 	private SimulationService simulationService;
 	private RaceService raceService;
+	private RaceEventService raceEventService;
 	private CentralMapper mapper;
 	
 	@GetMapping("{raceId}")
@@ -46,5 +51,16 @@ public class SimulationController {
 		this.simulationService.finishRace(raceId);
 		
 		return "redirect:/simulation/" + raceId;
+	}
+	
+	@GetMapping("{raceId}/events")
+	public String showRaceEvents(@PathVariable("raceId") Long raceId, Model model) {
+		List<RaceEventDTO> raceEvents = mapper.raceEvents2DTOList(this.raceEventService.findAllRaceEventsByRaceId(raceId));
+		RaceDTO race = mapper.race2DTO(this.raceService.findRaceById(raceId));
+		
+		model.addAttribute("events", raceEvents);
+		model.addAttribute("race", race);
+		
+		return "races/events";
 	}
 }

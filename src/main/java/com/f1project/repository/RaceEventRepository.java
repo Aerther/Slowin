@@ -8,4 +8,6 @@ import com.f1project.model.entity.RaceEvent;
 
 public interface RaceEventRepository extends JpaRepository<RaceEvent, Long> {
 	public List<RaceEvent> findRaceEventsByRaceId(Long raceId);
+	public List<RaceEvent> findRaceEventsByRaceIdOrderByIdDesc(Long raceId);
+	public void deleteAllRaceEventsByRaceId(Long raceId);
 }

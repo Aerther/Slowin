@@ -22,7 +22,7 @@ public class RaceEventDTO {
 	
 	private EventType eventType;
 	
-	private Race race;
+	private RaceDTO race;
 
 	private RaceResult raceResult;
 	

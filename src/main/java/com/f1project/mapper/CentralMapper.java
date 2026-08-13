@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.f1project.model.dto.CountryDTO;
 import com.f1project.model.dto.DriverDTO;
 import com.f1project.model.dto.RaceDTO;
+import com.f1project.model.dto.RaceEventDTO;
 import com.f1project.model.dto.RaceResultDTO;
 import com.f1project.model.dto.TeamDTO;
 import com.f1project.model.dto.TrackDTO;
@@ -17,6 +18,7 @@ import com.f1project.model.dto.WeatherDTO;
 import com.f1project.model.entity.Country;
 import com.f1project.model.entity.Driver;
 import com.f1project.model.entity.Race;
+import com.f1project.model.entity.RaceEvent;
 import com.f1project.model.entity.RaceResult;
 import com.f1project.model.entity.Team;
 import com.f1project.model.entity.Track;
@@ -59,6 +61,8 @@ public interface CentralMapper {
 	
 	RaceRules request2RaceRules(RaceRequest raceRequest);
 	
+	RaceEventDTO raceEvent2DTO(RaceEvent raceEvent);
+	
 	@Mapping(target = "race", ignore = true)
 	RaceResultDTO raceResult2DTO(RaceResult raceResult);
 	
@@ -68,6 +72,7 @@ public interface CentralMapper {
 	Weather DTO2weather(WeatherDTO weatherDTO);
 	
 	List<CountryDTO> countries2DTOList(List<Country> countries);
+	List<RaceEventDTO> raceEvents2DTOList(List<RaceEvent> raceEvents);
 	List<RaceDTO> races2DTOList(List<Race> races);
 	List<DriverDTO> drivers2DTOList(List<Driver> drivers);
 	List<TrackDTO> tracks2DTOList(List<Track> tracks);

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head th:replace="~{fragments/head :: head('Race Simulation')}"></head>
+<html lang="pt-BR">
+<head th:replace="~{fragments/head :: head('Simulação')}"></head>
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
 
@@ -17,30 +17,35 @@
 
             <div class="sim-header-stats">
                 <div class="sim-stat title-wrapper" th:switch="${race.raceStatus.description}">
-                    <span class="sim-stat-value status-flag status-sc" 
-                          th:case="'SAFETYCAR'"
-                          th:if="${race.lapsSafetyCarDuration > 1}"
-                          th:text="'SAFETY CAR (' + ${race.lapsSafetyCarDuration} + ' voltas)'">
-                        SAFETY CAR (2 voltas)
-                    </span>
+                    <th:block th:case="'SAFETYCAR'">
+                        <span class="sim-stat-value status-flag status-sc-ending" 
+                            th:if="${race.lapsSafetyCarDuration == 1}">
+                            SAFETY CAR ENTRANDO
+                        </span>
+                        
+                        <span class="sim-stat-value status-flag status-sc" 
+                            th:if="${race.lapsSafetyCarDuration > 1}"
+                            th:text="'SAFETY CAR (' + ${race.lapsSafetyCarDuration} + ' voltas)'">
+                            SAFETY CAR (2 voltas)
+                        </span>
 
-                    <span class="sim-stat-value status-flag status-sc-ending" 
-                          th:case="'SAFETYCAR'"
-                          th:if="${race.lapsSafetyCarDuration == 1}">
-                        SAFETY CAR ENTRANDO
-                    </span>
+                        <span class="sim-stat-value status-flag status-sc" 
+                            th:if="${race.lapsSafetyCarDuration <= 0}">
+                            SAFETY CAR
+                        </span>
+                    </th:block>
 
-                    <span class="sim-stat-value status-flag status-vsc" 
-                          th:case="'VSC'"
-                          th:if="${race.lapsSafetyCarDuration > 1}">
-                        VSC ATIVO
-                    </span>
+                    <th:block th:case="'VSC'">
+                        <span class="sim-stat-value status-flag status-vsc-ending" 
+                            th:if="${race.lapsSafetyCarDuration == 1}">
+                            VSC SAINDO
+                        </span>
 
-                    <span class="sim-stat-value status-flag status-vsc-ending" 
-                          th:case="'VSC'"
-                          th:if="${race.lapsSafetyCarDuration == 1}">
-                        VSC SAINDO
-                    </span>
+                        <span class="sim-stat-value status-flag status-vsc" 
+                            th:if="${race.lapsSafetyCarDuration != 1}">
+                            VSC ATIVO
+                        </span>
+                    </th:block>
 
                     <span class="sim-stat-value status-flag status-finished" 
                           th:case="'FINISHED'">
@@ -185,6 +190,7 @@
                 <div class="actions-group-left">
                     <a th:href="@{/simulation/{id}/simulate(id=${race.id}, laps=1)}" class="btn-sim-secondary">+1 Volta</a>
                     <a th:href="@{/simulation/{id}/simulate(id=${race.id}, laps=5)}" class="btn-sim-secondary">+5 Voltas</a>
+                    <a th:href="@{/simulation/{id}/events(id=${race.id})}" class="btn-sim-secondary">Ver Eventos</a>
                 </div>
 
                 <div class="actions-group-right">

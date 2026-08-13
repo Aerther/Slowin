@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Eventos da Corrida')}"></head>
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <main class="app-main">
+        <section class="sim-title-bar">
+            <div>
+                <div class="title-wrapper">
+                    <h1 th:text="'Eventos — ' + ${race.name}">Eventos — Grande Prêmio de Interlagos</h1>
+                    <p class="subtitle" th:text="${race.track.name + ' • ' + race.track.country.brazilian}">
+                        Autódromo de Interlagos • Brasil
+                    </p>
+                </div>
+            </div>
+
+            <div class="sim-header-stats">
+                <div class="sim-stat title-wrapper" th:switch="${race.raceStatus.description}">
+                    <th:block th:case="'SAFETYCAR'">
+                        <span class="sim-stat-value status-flag status-sc-ending" 
+                              th:if="${race.lapsSafetyCarDuration == 1}">
+                            SAFETY CAR ENTRANDO
+                        </span>
+                        <span class="sim-stat-value status-flag status-sc" 
+                              th:if="${race.lapsSafetyCarDuration > 1}"
+                              th:text="'SAFETY CAR (' + ${race.lapsSafetyCarDuration} + ' voltas)'">
+                            SAFETY CAR (2 voltas)
+                        </span>
+                        <span class="sim-stat-value status-flag status-sc" 
+                              th:if="${race.lapsSafetyCarDuration <= 0}">
+                            SAFETY CAR
+                        </span>
+                    </th:block>
+
+                    <th:block th:case="'VSC'">
+                        <span class="sim-stat-value status-flag status-vsc-ending" 
+                              th:if="${race.lapsSafetyCarDuration == 1}">
+                            VSC SAINDO
+                        </span>
+                        <span class="sim-stat-value status-flag status-vsc" 
+                              th:if="${race.lapsSafetyCarDuration != 1}">
+                            VSC ATIVO
+                        </span>
+                    </th:block>
+
+                    <span class="sim-stat-value status-flag status-finished" 
+                          th:case="'FINISHED'">
+                        FINALIZADA
+                    </span>
+
+                    <span class="sim-stat-value status-flag status-green" 
+                          th:case="*">
+                        Pista Livre
+                    </span>
+                </div>
+
+                <div class="sim-stat">
+                    <div class="weather-value-wrapper">
+                        <img class="weather-icon"
+                             th:src="@{${race.weather.weatherCondition.getWeatherUrl()}}"
+                             th:alt="${race.weather.weatherCondition.description}">
+
+                        <span class="sim-stat-value" 
+                              th:text="${race.weather.weatherCondition.description}">
+                            Ensolarado
+                        </span>
+                    </div>
+                </div>
+
+                <div class="sim-stat title-wrapper">
+                    <span class="sim-stat-label">Progresso</span>
+                    <span class="sim-stat-value accent" th:text="${race.lapsDone + ' / ' + race.lapsQuantity}">
+                        12 / 71 Voltas
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="sim-dashboard-container">
+            <div class="sim-table-container">
+                <table class="sim-app-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 140px;">Volta</th>
+                            <th class="text-center" style="width: 180px;">Tipo</th>
+                            <th style="width: 250px;">Piloto</th>
+                            <th>Descrição do Evento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="event : ${events}">
+                            <td class="text-center font-bold font-mono">
+                                <span class="event-lap-badge" th:text="'Volta ' + ${event.lap}">Volta 12</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class="event-type-badge" 
+                                      th:classappend="'event-type-' + ${#strings.toLowerCase(event.eventType)}"
+                                      th:text="${event.eventType.description}">
+                                    PIT_STOP
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="driver-cell" th:if="${event.raceResult != null}">
+                                    <figure class="flag-icon" th:if="${event.raceResult.driver.nationality != null}">
+                                        <img class="fig-img" 
+                                             th:src="${event.raceResult.driver.nationality.flagUrl}" 
+                                             th:alt="${event.raceResult.driver.nationality.name}">
+                                    </figure>
+
+                                    <span class="driver-name" th:text="${event.raceResult.driver.name}">L. Hamilton</span>
+                                </div>
+                                <span class="text-muted" th:if="${event.raceResult == null}">—</span>
+                            </td>
+
+                            <td class="font-mono" th:text="${event.message}">
+                                Piloto realizou pit stop e trocou para pneus Macios.
+                            </td>
+                        </tr>
+
+                        <tr th:if="${events == null or events.isEmpty()}">
+                            <td colspan="4" class="text-center text-muted" style="padding: 2.5rem;">
+                                Nenhum evento foi registrado nesta corrida até o momento.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="sim-actions-bar">
+                <div class="actions-group-left">
+                    <a th:href="@{'/simulation/' + ${race.id}}" class="btn-sim-primary">
+                        ← Voltar para a Simulação
+                    </a>
+                </div>
+
+                <div class="actions-group-right">
+                    <a th:href="@{/races}" class="btn-sim-danger">Sair</a>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

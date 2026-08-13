@@ -2,6 +2,7 @@ package com.f1project.controller;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,6 +62,7 @@ public class TeamController {
 		return "redirect:/teams";
 	}
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/delete/all")
 	public String deleteAllTeams() {
 		this.teamService.deleteAllTeams();

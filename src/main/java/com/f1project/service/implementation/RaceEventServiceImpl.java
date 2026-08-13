@@ -26,7 +26,7 @@ public class RaceEventServiceImpl implements RaceEventService {
 
 	@Override
 	public List<RaceEvent> findAllRaceEventsByRaceId(Long raceId) {
-		return this.raceEventRepo.findRaceEventsByRaceId(raceId);
+		return this.raceEventRepo.findRaceEventsByRaceIdOrderByIdDesc(raceId);
 	}
 
 	@Override
@@ -53,6 +53,11 @@ public class RaceEventServiceImpl implements RaceEventService {
 	@Override
 	public void deleteAllRaceEvents() {
 		
+	}
+
+	@Override
+	public void deleteAllRaceEventsByRaceId(Long raceId) {
+		this.raceEventRepo.deleteAllRaceEventsByRaceId(raceId);
 	}
 
 }

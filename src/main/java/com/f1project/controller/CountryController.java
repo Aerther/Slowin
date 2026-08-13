@@ -2,6 +2,7 @@ package com.f1project.controller;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,7 @@ public class CountryController {
 	
 	// CREATE OPERATION
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/create")
 	public String createCountries() {
 		this.countryService.saveCountriesFromClient();
@@ -47,6 +49,7 @@ public class CountryController {
 	
 	// DELETE OPERATION
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/delete/all")
 	public String deleteAllCountries() {
 		this.countryService.deleteAllCountries();

@@ -3,6 +3,7 @@ package com.f1project.model.entity;
 import com.f1project.model.enums.DriverStatus;
 import com.f1project.model.enums.Tyre;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -53,7 +54,7 @@ public class RaceResult {
 	@ManyToOne
 	private Driver driver;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "race_id")
 	private Race race;
 }

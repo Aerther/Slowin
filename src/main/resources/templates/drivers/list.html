@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head th:replace="~{fragments/head :: head('Drivers')}"></head>
+<html lang="pt-BR">
+<head th:replace="~{fragments/head :: head('Pilotos')}"></head>
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
 
@@ -49,7 +49,7 @@
                             <td class="cell-highlight" th:text="${driver.team.name}">Equipe</td>
 
                             <td class="text-right">
-                                <a class="btn-table btn-edit">Editar</a>
+                                <a class="btn-table btn-edit" th:href="@{'/drivers/update/' + ${driver.id}}">Editar</a>
                                 <a class="btn-table btn-delete" th:href="@{/drivers/delete(driverId=${driver.id})}">Excluir</a>
                             </td>
                         </tr>

@@ -15,6 +15,8 @@ public interface RaceEventService {
 	
 	List<RaceEvent> saveAllRaceEvents(List<RaceEvent> raceEvents);
 	
+	void deleteAllRaceEventsByRaceId(Long raceId);
+	
 	void deleteRaceEvent(Long id);
 	
 	void deleteAllRaceEvents();

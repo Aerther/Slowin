@@ -2,6 +2,7 @@ package com.f1project.controller;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,6 +68,7 @@ public class RaceController {
 	
 	// UPDATE OPERATION
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/update/{raceId}")
 	public String showRaceEditForm(@PathVariable("raceId") Long raceId, Model model) {
 		List<TrackDTO> tracksDTO = mapper.tracks2DTOList(this.trackService.findAllTracks());
@@ -80,6 +82,7 @@ public class RaceController {
 		return "races/update";
 	}
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@PostMapping("/update")
 	public String editRace(RaceRequest raceRequest) {
 		this.raceService.updateRace(raceRequest);
@@ -96,6 +99,7 @@ public class RaceController {
 		return "redirect:/races";
 	}
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/delete/all")
 	public String deleteAllRaces() {
 		this.raceService.deleteAllRaces();

@@ -22,14 +22,17 @@ import com.f1project.model.enums.Tyre;
 import com.f1project.model.request.RaceRequest;
 import com.f1project.repository.CountryRepository;
 import com.f1project.repository.DriverRepository;
+import com.f1project.repository.RaceEventRepository;
 import com.f1project.repository.RaceRepository;
 import com.f1project.repository.RaceResultRepository;
 import com.f1project.repository.TrackRepository;
 import com.f1project.service.DriverService;
+import com.f1project.service.RaceEventService;
 import com.f1project.service.RaceService;
 import com.f1project.service.TrackService;
 import com.f1project.utils.RaceRules;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -38,6 +41,7 @@ import lombok.NoArgsConstructor;
 public class RaceServiceImpl implements RaceService {
 	
 	private RaceRepository raceRepo;
+	private RaceEventService raceEventService;
 	private TrackService trackService;
 	private DriverService driverService;
 	
@@ -101,9 +105,12 @@ public class RaceServiceImpl implements RaceService {
 		return null;
 	}
 
+	@Transactional
 	@Override
 	public void deleteRaceById(Long id) {
 		this.findRaceById(id);
+		
+		this.raceEventService.deleteAllRaceEventsByRaceId(id);
 		
 		this.raceRepo.deleteById(id);
 	}

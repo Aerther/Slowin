@@ -3,6 +3,7 @@ package com.f1project.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -60,13 +61,14 @@ public class DriverController {
 	
 	@GetMapping("/update/{driverId}")
 	public String showDriverEditForm(@PathVariable("driverId") Long driverId, Model model) {
-		DriverDTO driverDTO = mapper.driver2DTO(this.driverService.findDriverById(driverId));
+		DriverDTO driver = mapper.driver2DTO(this.driverService.findDriverById(driverId));
 		
 		List<CountryDTO> countries = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
 		List<TeamDTO> teams = SortList.sortTeamsByName(mapper.teams2DTOList(this.teamService.findAllTeams()));
 		
 		model.addAttribute("countries", countries);
 		model.addAttribute("teams", teams);
+		model.addAttribute("driver", driver);
 		
 		model.addAttribute("activePage", "drivers");
 		
@@ -89,6 +91,7 @@ public class DriverController {
 		return "redirect:/drivers";
 	}
 	
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/delete/all")
 	public String deleteAllDrivers() {
 		this.driverService.deleteAllDrivers();
@@ -109,6 +112,7 @@ public class DriverController {
 	}
 	
 	// CREATE DRIVERS PRE MADE
+	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
 	@GetMapping("/create/premade")
 	public String createPreMadeDrivers() {
 		this.driverService.createPreMadeDrivers();

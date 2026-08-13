@@ -7,6 +7,7 @@ import com.f1project.model.enums.EventType;
 import com.f1project.model.enums.RaceStatus;
 import com.f1project.utils.RaceRules;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,13 +32,13 @@ public class RaceEvent {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "race_id")
 	private Race race;
 	
 	private EventType eventType;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "race_result_id")
 	private RaceResult raceResult;
 	
