@@ -29,31 +29,11 @@ public class CountryController {
 	
 	@GetMapping
 	public String showCountries(Model model) {
-		List<CountryDTO> countriesDTO = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
+		List<CountryDTO> countries = mapper.countries2DTOList(this.countryService.findAllCountriesOrderByBrazilianAsc());
 		
-		model.addAttribute("countries", countriesDTO);
+		model.addAttribute("countries", countries);
 		model.addAttribute("activePage", "countries");
 		
 		return "countries/list";
-	}
-	
-	// CREATE OPERATION
-	
-	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
-	@GetMapping("/create")
-	public String createCountries() {
-		this.countryService.saveCountriesFromClient();
-		
-		return "redirect:/countries";
-	}
-	
-	// DELETE OPERATION
-	
-	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
-	@GetMapping("/delete/all")
-	public String deleteAllCountries() {
-		this.countryService.deleteAllCountries();
-		
-		return "redirect:/countries";
 	}
 }

@@ -18,24 +18,8 @@ import lombok.NoArgsConstructor;
 @RequestMapping("/")
 public class MainController {
 	
-	private CountryService countryService;
-	private DriverService driverService;
-	private TrackService trackService;
-	private TeamService teamService;
-	
 	@GetMapping
 	public String mainPageRedirect() {
-		return "redirect:/drivers";
-	}
-	
-	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
-	@GetMapping("/create/all")
-	public String createAllEntitys() {
-		this.countryService.saveCountriesFromClient();
-		this.trackService.saveTracksFromTxt();
-		this.teamService.createPreMadeTeams();
-		this.driverService.createPreMadeDrivers();
-		
 		return "redirect:/drivers";
 	}
 }

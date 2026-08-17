@@ -96,4 +96,9 @@ public class TeamServiceImpl implements TeamService {
 		this.teamRepo.deleteAll();
 	}
 
+	@Override
+	public List<Team> findAllTeamsOrderByNameAsc() {
+		return this.teamRepo.findAllByOrderByNameAsc();
+	}
+
 }

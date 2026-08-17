@@ -87,4 +87,9 @@ public class CountryServiceImpl implements CountryService {
 		
 		return savedCountries;
 	}
+
+	@Override
+	public List<Country> findAllCountriesOrderByBrazilianAsc() {
+		return this.countryRepo.findAllByOrderByBrazilianAsc();
+	}
 }

@@ -125,4 +125,9 @@ public class RaceServiceImpl implements RaceService {
 		return this.raceRepo.save(race);
 	}
 
+	@Override
+	public List<Race> findAllRacesOrderByDateCreatedDesc() {
+		return this.raceRepo.findAllByOrderByDateCreatedDesc();
+	}
+
 }

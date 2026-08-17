@@ -9,6 +9,7 @@ import com.f1project.model.request.TeamRequest;
 
 public interface TeamService {
 	public List<Team> findAllTeams();
+	public List<Team> findAllTeamsOrderByNameAsc();
 	
 	public Team findTeamById(Long id);
 	

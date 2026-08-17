@@ -39,8 +39,8 @@ public class DriverController {
 	
 	@GetMapping("/create")
 	public String showDriverCreationForm(Model model) {
-		List<CountryDTO> countries = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
-		List<TeamDTO> teams = SortList.sortTeamsByName(mapper.teams2DTOList(this.teamService.findAllTeams()));
+		List<CountryDTO> countries = mapper.countries2DTOList(this.countryService.findAllCountriesOrderByBrazilianAsc());
+		List<TeamDTO> teams = mapper.teams2DTOList(this.teamService.findAllTeamsOrderByNameAsc());
 		
 		model.addAttribute("countries", countries);
 		model.addAttribute("teams", teams);
@@ -63,8 +63,8 @@ public class DriverController {
 	public String showDriverEditForm(@PathVariable("driverId") Long driverId, Model model) {
 		DriverDTO driver = mapper.driver2DTO(this.driverService.findDriverById(driverId));
 		
-		List<CountryDTO> countries = SortList.sortCountriesByName(mapper.countries2DTOList(this.countryService.findAllCountries()));
-		List<TeamDTO> teams = SortList.sortTeamsByName(mapper.teams2DTOList(this.teamService.findAllTeams()));
+		List<CountryDTO> countries = mapper.countries2DTOList(this.countryService.findAllCountriesOrderByBrazilianAsc());
+		List<TeamDTO> teams = mapper.teams2DTOList(this.teamService.findAllTeamsOrderByNameAsc());
 		
 		model.addAttribute("countries", countries);
 		model.addAttribute("teams", teams);
@@ -91,32 +91,15 @@ public class DriverController {
 		return "redirect:/drivers";
 	}
 	
-	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
-	@GetMapping("/delete/all")
-	public String deleteAllDrivers() {
-		this.driverService.deleteAllDrivers();
-		
-		return "redirect:/drivers";
-	}
-	
 	// SHOW OPERATION
 	
 	@GetMapping
 	public String showDrivers(Model model) {
-		List<DriverDTO> driversDTO = SortList.sortDriversByName(mapper.drivers2DTOList(this.driverService.findAllDrivers()));
+		List<DriverDTO> driversDTO = mapper.drivers2DTOList(this.driverService.findAllDriversOrderByNameAsc());
 		
 		model.addAttribute("drivers", driversDTO);
 		model.addAttribute("activePage", "drivers");
 		
 		return "drivers/list";
-	}
-	
-	// CREATE DRIVERS PRE MADE
-	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
-	@GetMapping("/create/premade")
-	public String createPreMadeDrivers() {
-		this.driverService.createPreMadeDrivers();
-		
-		return "redirect:/drivers";
 	}
 }

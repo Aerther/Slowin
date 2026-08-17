@@ -3,6 +3,9 @@ package com.f1project.model.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.f1project.model.enums.EventType;
 import com.f1project.model.enums.RaceStatus;
 import com.f1project.utils.RaceRules;
@@ -32,13 +35,13 @@ public class RaceEvent {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "race_id")
 	private Race race;
 	
 	private EventType eventType;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "race_result_id")
 	private RaceResult raceResult;
 	

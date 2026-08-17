@@ -8,6 +8,7 @@ import com.f1project.model.request.DriverRequest;
 
 public interface DriverService {
 	List<Driver> findAllDrivers();
+	List<Driver> findAllDriversOrderByNameAsc();
 	
 	Driver findDriverById(Long id);
 	
@@ -16,6 +17,7 @@ public interface DriverService {
 	Driver updateDriver(DriverRequest driverRequest);
 	
 	List<Driver> createPreMadeDrivers();
+	List<Driver> createClassDrivers();
 	
 	void deleteDriver(Long id);
 	

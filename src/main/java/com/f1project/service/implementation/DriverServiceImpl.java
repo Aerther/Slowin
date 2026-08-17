@@ -2,21 +2,15 @@ package com.f1project.service.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.f1project.exception.ResourceNotFoundException;
 import com.f1project.mapper.CentralMapper;
-import com.f1project.model.dto.CountryDTO;
-import com.f1project.model.dto.DriverDTO;
 import com.f1project.model.entity.Country;
 import com.f1project.model.entity.Driver;
 import com.f1project.model.entity.Team;
 import com.f1project.model.request.DriverRequest;
-import com.f1project.repository.CountryRepository;
 import com.f1project.repository.DriverRepository;
 import com.f1project.service.CountryService;
 import com.f1project.service.DriverService;
@@ -141,6 +135,65 @@ public class DriverServiceImpl implements DriverService {
 			    List.of("Mathias", "Brasil", "Red Bull"),
 			    List.of("Bino", "Brasil", "Red Bull"),
 			    List.of("Nícolas", "Brasil", "Red Bull")
+		));
+		
+		sDrivers.forEach((sDriver) -> {
+			
+			String name = sDriver.get(0);
+			Country country = this.countryService.findCountryByBrazilian(sDriver.get(1));
+			Team team = this.teamService.findTeamByName(sDriver.get(2));
+			
+			Driver driver = new Driver();
+			driver.setName(sDriver.get(0));
+			driver.setLevel(99);
+			driver.setNationality(country);
+			driver.setTeam(team);
+			
+			drivers.add(driver);
+			
+			this.driverRepo.save(driver);
+		});
+		
+		return drivers;
+	}
+
+	@Override
+	public List<Driver> findAllDriversOrderByNameAsc() {
+		return this.driverRepo.findAllByOrderByNameAsc();
+	}
+
+	@Override
+	public List<Driver> createClassDrivers() {
+		List<Driver> drivers = new ArrayList<>();
+		
+		List<List<String>> sDrivers = new ArrayList<>(List.of(
+				List.of("Arthur", "Brasil", "Red Bull"),
+				List.of("Leonardo", "Brasil", "Red Bull"),
+				List.of("Paulo", "Brasil", "Red Bull"),
+				List.of("Mathias", "Brasil", "Red Bull"),
+				List.of("Nícolas", "Brasil", "Red Bull"),
+				List.of("Marcelo", "Brasil", "Red Bull"),
+				List.of("Bino", "Brasil", "Red Bull"),
+				List.of("Kelly", "Brasil", "Red Bull"),
+				List.of("Joice", "Brasil", "Red Bull"),
+				List.of("Boenny", "Brasil", "Red Bull"),
+				List.of("Martins", "Brasil", "Red Bull"),
+				List.of("Kunrath", "Brasil", "Red Bull"),
+				List.of("Meurer", "Brasil", "Red Bull"),
+				List.of("Caio", "Brasil", "Red Bull"),
+				List.of("Kauã", "Brasil", "Red Bull"),
+				List.of("Felipe", "Brasil", "Red Bull"),
+				List.of("Augusto", "Brasil", "Red Bull"),
+				List.of("Rafael", "Brasil", "Red Bull"),
+				List.of("Luiz", "Brasil", "Red Bull"),
+				List.of("Kich", "Brasil", "Red Bull"),
+				List.of("Francesco", "Brasil", "Red Bull"),
+				List.of("Thaila", "Brasil", "Red Bull"),
+				List.of("Milena", "Brasil", "Red Bull"),
+				List.of("Nauany", "Brasil", "Red Bull"),
+				List.of("Davi", "Brasil", "Red Bull"),
+				List.of("Luft", "Brasil", "Red Bull"),
+				List.of("Garcia", "Brasil", "Red Bull")
 		));
 		
 		sDrivers.forEach((sDriver) -> {

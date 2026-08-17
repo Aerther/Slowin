@@ -8,6 +8,7 @@ import com.f1project.model.request.RaceRequest;
 
 public interface RaceService {
 	List<Race> findAllRaces();
+	List<Race> findAllRacesOrderByDateCreatedDesc();
 	
 	Race findRaceById(Long id);
 	

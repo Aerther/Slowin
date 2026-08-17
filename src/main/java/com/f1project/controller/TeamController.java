@@ -31,43 +31,11 @@ public class TeamController {
 	
 	@GetMapping
 	public String showTeams(Model model) {
-		List<TeamDTO> teams = SortList.sortTeamsByName(mapper.teams2DTOList(this.teamService.findAllTeams()));
+		List<TeamDTO> teams = mapper.teams2DTOList(this.teamService.findAllTeamsOrderByNameAsc());
 		
 		model.addAttribute("teams", teams);
 		model.addAttribute("activePage", "teams");
 		
 		return "teams/list";
 	}
-	
-	// CREATE OPERATION
-	
-	@GetMapping("/create")
-	public String showTeamCreationForm(Model model) {
-		return "teams/create";
-	}
-	
-	@PostMapping("/create")
-	public String createTeam(TeamRequest teamRequest) {
-		this.teamService.saveTeam(teamRequest);
-		
-		return "redirect:/teams";
-	}
-	
-	// DELETE OPERATION
-	
-	@GetMapping("/delete")
-	public String deleteTeam(@RequestParam("teamId") Long teamId) {
-		this.teamService.deleteTeam(teamId);
-		
-		return "redirect:/teams";
-	}
-	
-	@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
-	@GetMapping("/delete/all")
-	public String deleteAllTeams() {
-		this.teamService.deleteAllTeams();
-		
-		return "redirect:/teams";
-	}
-	
 }

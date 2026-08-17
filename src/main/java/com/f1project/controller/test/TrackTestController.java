@@ -1,4 +1,4 @@
-package com.f1project.controller;
+package com.f1project.controller.test;
 
 import java.util.List;
 
@@ -17,46 +17,57 @@ import com.f1project.model.dto.TrackDTO;
 import com.f1project.model.request.TrackRequest;
 import com.f1project.service.CountryService;
 import com.f1project.service.TrackService;
-import com.f1project.utils.SortList;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Controller
 @RequestMapping("/tracks")
-public class TrackController {
-	
+@ConditionalOnProperty(name = "app.enable-test-endpoints", havingValue = "true")
+public class TrackTestController {
 	private TrackService trackService;
 	private CountryService countryService;
 	private CentralMapper mapper;
-	
-	// SHOW OPERATION
-	
-	@GetMapping
-	public String showTracks(Model model) {
-		List<TrackDTO> tracks = mapper.tracks2DTOList(this.trackService.findAllTracksOrderByNameAsc());
 		
-		model.addAttribute("tracks", tracks);
-		model.addAttribute("activePage", "tracks");
+	@GetMapping("/create/txt")
+	public String createTracksBasedTxt() {
+		this.trackService.saveTracksFromTxt();
 		
-		return "tracks/list";
+		return "redirect:/tracks";
 	}
-	
-	// CREATE OPERATION
-	
-	@GetMapping("/create")
-	public String showTrackCreationForm(Model model) {
+		
+	// UPDATE OPERATION
+	@GetMapping("/update/{trackId}")
+	public String showTrackEditForm(@PathVariable("trackId") Long trackId, Model model) {
 		List<CountryDTO> countries = mapper.countries2DTOList(this.countryService.findAllCountriesOrderByBrazilianAsc());
-				
-		model.addAttribute("countries", countries);
-				
-		return "tracks/create";
-	}
+		TrackDTO track = mapper.track2DTO(this.trackService.findTrackById(trackId));
 			
-	@PostMapping("/create")
-	public String createTrack(TrackRequest trackRequest) {
-		this.trackService.saveTrack(trackRequest);
-				
+		model.addAttribute("track", track);
+		model.addAttribute("countries", countries);
+			
+		return "tracks/update";
+	}
+		
+	@PostMapping("/update")
+	public String updateTrack(TrackRequest trackRequest) {
+		this.trackService.updateTrack(trackRequest);
+			
+		return "redirect:/tracks";
+	}
+		
+	// DELETE OPERATION
+		
+	@GetMapping("/delete")
+	public String deleteTrack(@RequestParam("trackId") Long trackId) {
+		this.trackService.deleteTrack(trackId);
+			
+		return "redirect:/tracks";
+	}
+	
+	@GetMapping("/delete/all")
+	public String deleteAllTracks() {
+		this.trackService.deleteAllTracks();
+			
 		return "redirect:/tracks";
 	}
 }

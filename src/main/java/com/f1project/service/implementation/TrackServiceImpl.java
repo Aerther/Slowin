@@ -101,5 +101,10 @@ public class TrackServiceImpl implements TrackService {
 		
 		return savedTracks;
 	}
+
+	@Override
+	public List<Track> findAllTracksOrderByNameAsc() {
+		return this.trackRepo.findAllByOrderByNameAsc();
+	}
 	
 }

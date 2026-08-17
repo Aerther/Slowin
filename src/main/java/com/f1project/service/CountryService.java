@@ -8,6 +8,7 @@ import com.f1project.model.request.CountryRequest;
 
 public interface CountryService {
 	public List<Country> findAllCountries();
+	public List<Country> findAllCountriesOrderByBrazilianAsc();
 	
 	public Country findCountryById(Long id);
 	

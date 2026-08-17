@@ -1,6 +1,7 @@
 package com.f1project.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,4 +66,7 @@ public class Race {
 	
 	@OneToMany(mappedBy = "race", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RaceResult> results;
+	
+	@OneToMany(mappedBy = "race", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RaceEvent> events = new ArrayList<>();
 }

@@ -1,5 +1,8 @@
 package com.f1project.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.f1project.model.enums.DriverStatus;
 import com.f1project.model.enums.Tyre;
 
@@ -10,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -54,7 +58,10 @@ public class RaceResult {
 	@ManyToOne
 	private Driver driver;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "race_id")
-	private Race race;
+	@ManyToOne
+    @JoinColumn(name = "race_id")
+    private Race race;
+	
+	@OneToMany(mappedBy = "raceResult", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RaceEvent> events = new ArrayList<>();
 }

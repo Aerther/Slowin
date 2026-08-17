@@ -14,4 +14,5 @@ public interface RaceResultService {
 	
 	void deleteRaceResultById(Long id);
 	void deleteAllRaceResultsByRaceId(Long raceId);
+	void deleteAllRaceResults();
 }

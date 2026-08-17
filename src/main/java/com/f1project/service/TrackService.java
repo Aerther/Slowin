@@ -8,6 +8,7 @@ import com.f1project.model.request.TrackRequest;
 
 public interface TrackService {
 	List<Track> findAllTracks();
+	List<Track> findAllTracksOrderByNameAsc();
 	
 	Track findTrackById(Long id);
 	
