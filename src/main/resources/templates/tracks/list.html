@@ -12,8 +12,6 @@
                     <p class="subtitle">Gerencie o banco de dados de pistas do sistema</p>
                 </div>
             </div>
-
-            <a class="btn btn-primary" th:href="@{/tracks/create}">+ CADASTRAR NOVA PISTA</a>
         </section>
 
         <section class="dashboard-container">
@@ -26,7 +24,6 @@
                             <th>País</th>
                             <th>Tempo Mais Rápido</th>
                             <th>Tamanho</th>
-                            <th class="text-right">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,10 +44,6 @@
 
                             <td class="cell-highlight" th:text="${track.lapTime}">Tempo Mais Rápido</td>
                             <td class="cell-highlight" th:text="${track.length}">Tamanho</td>
-
-                            <td class="text-right">
-                                <a class="btn-table btn-edit">Editar</a>
-                            </td>
                         </tr>
                     </tbody>
                 </table>

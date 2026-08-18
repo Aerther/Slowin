@@ -95,9 +95,9 @@ public class DriverController {
 	
 	@GetMapping
 	public String showDrivers(Model model) {
-		List<DriverDTO> driversDTO = mapper.drivers2DTOList(this.driverService.findAllDriversOrderByNameAsc());
+		List<DriverDTO> drivers = mapper.drivers2DTOList(this.driverService.findAllDriversOrderByNameAsc());
 		
-		model.addAttribute("drivers", driversDTO);
+		model.addAttribute("drivers", drivers);
 		model.addAttribute("activePage", "drivers");
 		
 		return "drivers/list";

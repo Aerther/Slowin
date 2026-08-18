@@ -35,6 +35,7 @@ public class SimulationController {
 		RaceDTO raceDTO = mapper.race2DTO(this.simulationService.orderRaceResultsByRaceTime(raceId));
 		
 		model.addAttribute("race", raceDTO);
+		model.addAttribute("activePage", "races");
 		
 		return "races/simulate";
 	}
@@ -60,6 +61,8 @@ public class SimulationController {
 		
 		model.addAttribute("events", raceEvents);
 		model.addAttribute("race", race);
+		
+		model.addAttribute("activePage", "races");
 		
 		return "races/events";
 	}

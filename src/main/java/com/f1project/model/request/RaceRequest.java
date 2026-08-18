@@ -23,24 +23,11 @@ public class RaceRequest {
 	
     private List<Long> driversId;
     
-    @JsonProperty("allow_retirement")
-    private boolean driverRetirementEnabled = true;
-    
-    @JsonProperty("allow_flat_tyre")
-    private boolean flatTyreEnabled = true;
-    
-    @JsonProperty("allow_fan_invasion")
-    private boolean fanInvasionEnabled = true;
-    
-    @JsonProperty("allow_safety_car")
-    private boolean safetyCarEnabled = true;
-    
-    @JsonProperty("allow_weather_change")
-    private boolean weatherChangeEnabled = true;
-    
-    @JsonProperty("allow_driver_pitting")
-    private boolean driverPittingEnabled = true;
-    
-    @JsonProperty("allow_driver_tyre_wear")
-    private boolean driverTyreWearEnabled = true;
+    private boolean driverRetirementEnabled = false;
+    private boolean flatTyreEnabled = false;
+    private boolean fanInvasionEnabled = false;
+    private boolean safetyCarEnabled = false;
+    private boolean weatherChangeEnabled = false;
+    private boolean driverPittingEnabled = false;
+    private boolean driverTyreWearEnabled = false;
 }

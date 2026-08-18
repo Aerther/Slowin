@@ -56,6 +56,8 @@ public class RaceController {
 		model.addAttribute("tracks", tracks);
 		model.addAttribute("drivers", drivers);
 		
+		model.addAttribute("activePage", "races");
+		
 		return "races/create"; 
 	}
 	

@@ -29,7 +29,7 @@ public class SimulationCalculator {
 	public double calculateTyreTypeTime(Tyre tyre, LapCondition lapCondition) {
 		if(lapCondition.isTyreWrong() || lapCondition.isTyreFlat()) return 0;
 		
-		return this.randomBetween(1.7, 2.3) * (1 - tyre.getEfficiency());
+		return this.randomBetween(1.8, 2.4) * (1 - tyre.getEfficiency());
 	}
 	
 	public int useTyre(RaceStatus raceStatus, Tyre tyre, Team team) {

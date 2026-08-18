@@ -66,7 +66,15 @@ public class RaceServiceImpl implements RaceService {
 		Weather weather = mapper.DTO2weather(client.getWeatherCity(track.getLatitude(), track.getLongitude()));
 		weather.setWeatherCondition();
 		
-		RaceRules raceRules = mapper.request2RaceRules(raceRequest);
+		var rules = new RaceRules(
+			raceRequest.isDriverRetirementEnabled(),
+			raceRequest.isFlatTyreEnabled(),
+			raceRequest.isFanInvasionEnabled(),
+			raceRequest.isSafetyCarEnabled(),
+			raceRequest.isWeatherChangeEnabled(),
+			raceRequest.isDriverPittingEnabled(),
+			raceRequest.isDriverTyreWearEnabled()
+		);
 		
 		Race race = mapper.request2Race(raceRequest);
 		race.setId(null);
@@ -75,7 +83,7 @@ public class RaceServiceImpl implements RaceService {
 		race.setDateCreated(LocalDateTime.now());
 		race.setLapsDone(0);
 		race.setRaceStatus(RaceStatus.CREATED);
-		race.setRaceRules(raceRules);
+		race.setRaceRules(rules);
 		
 		List<RaceResult> raceResults = new ArrayList<>();
 		

@@ -326,7 +326,7 @@ public class SimulationServiceImpl implements SimulationService {
 	    
 	    if (activeResults.size() <= 1) return;
 	    
-	    double targetGap = 0.8;
+	    double targetGap = 0.6;
 
 	    for (int i = 1; i < activeResults.size(); i++) {
 	        RaceResult current = activeResults.get(i);

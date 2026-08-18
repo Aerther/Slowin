@@ -144,7 +144,7 @@ public class DriverServiceImpl implements DriverService {
 			Team team = this.teamService.findTeamByName(sDriver.get(2));
 			
 			Driver driver = new Driver();
-			driver.setName(sDriver.get(0));
+			driver.setName(name);
 			driver.setLevel(99);
 			driver.setNationality(country);
 			driver.setTeam(team);
@@ -203,7 +203,7 @@ public class DriverServiceImpl implements DriverService {
 			Team team = this.teamService.findTeamByName(sDriver.get(2));
 			
 			Driver driver = new Driver();
-			driver.setName(sDriver.get(0));
+			driver.setName(name);
 			driver.setLevel(99);
 			driver.setNationality(country);
 			driver.setTeam(team);

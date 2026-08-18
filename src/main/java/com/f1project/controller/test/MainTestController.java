@@ -51,9 +51,9 @@ public class MainTestController {
 	
 	@GetMapping("/create/class")
 	public String createClassRace() {
-		this.countryService.saveCountriesFromClient();
-		this.trackService.saveTracksFromTxt();
-		this.teamService.createPreMadeTeams();
+		this.raceEventService.deleteAllRaceEvents();
+		this.raceService.deleteAllRaces();
+		this.driverService.deleteAllDrivers();
 		this.driverService.createClassDrivers();
 		
 		return "redirect:/drivers";

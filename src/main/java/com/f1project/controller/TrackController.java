@@ -49,6 +49,7 @@ public class TrackController {
 		List<CountryDTO> countries = mapper.countries2DTOList(this.countryService.findAllCountriesOrderByBrazilianAsc());
 				
 		model.addAttribute("countries", countries);
+		model.addAttribute("activePage", "tracks");
 				
 		return "tracks/create";
 	}
